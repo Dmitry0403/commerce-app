@@ -1,0 +1,870 @@
+{
+  "popularCategory": [
+    {
+      "category": {
+        "id": 1,
+        "type": "house",
+        "label": "Дом, сад, зоотовары"
+      },
+      "items": [
+        {
+          "id": 1,
+          "category_type": "house",
+          "label": "Коврик",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 2,
+          "category_type": "house",
+          "label": "Коврик",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 3,
+          "category_type": "house",
+          "label": "Коврик",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 4,
+          "category_type": "house",
+          "label": "Коврик",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 5,
+          "category_type": "house",
+          "label": "Коврик",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 6,
+          "category_type": "house",
+          "label": "Коврик",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 7,
+          "category_type": "house",
+          "label": "Коврик",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 8,
+          "category_type": "house",
+          "label": "Коврик",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 9,
+          "category_type": "house",
+          "label": "Коврик",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 10,
+          "category_type": "house",
+          "label": "Коврик",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        }
+      ]
+    },
+    {
+      "category": { "id": 2, "type": "children", "label": "Детям и мамам" },
+      "items": [
+        {
+          "id": 1,
+          "category_type": "children",
+          "label": "Кукла Мила",
+          "price": 41,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 2,
+          "category_type": "children",
+          "label": "Кукла Мила",
+          "price": 41,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 3,
+          "category_type": "children",
+          "label": "Кукла Мила",
+          "price": 41,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 4,
+          "category_type": "children",
+          "label": "Кукла Мила",
+          "price": 41,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 5,
+          "category_type": "children",
+          "label": "Кукла Мила",
+          "price": 41,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 6,
+          "category_type": "children",
+          "label": "Кукла Мила",
+          "price": 41,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 7,
+          "category_type": "children",
+          "label": "Кукла Мила",
+          "price": 41,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 8,
+          "category_type": "children",
+          "label": "Кукла Мила",
+          "price": 41,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 9,
+          "category_type": "children",
+          "label": "Кукла Мила",
+          "price": 41,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 10,
+          "category_type": "children",
+          "label": "Кукла Мила",
+          "price": 41,
+          "img": "https://source.unsplash.com/random"
+        }
+      ]
+    },
+    {
+      "category": {
+        "id": 3,
+        "type": "cosmetics",
+        "label": "Косметика, парфюмерия"
+      },
+      "items": [
+        {
+          "id": 1,
+          "category_type": "cosmetics",
+          "label": "Шампунь для волос Damage Protector",
+          "price": 10,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 2,
+          "category_type": "cosmetics",
+          "label": "Шампунь для волос Damage Protector",
+          "price": 10,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 3,
+          "category_type": "cosmetics",
+          "label": "Шампунь для волос Damage Protector",
+          "price": 10,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 4,
+          "category_type": "cosmetics",
+          "label": "Шампунь для волос Damage Protector",
+          "price": 10,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 5,
+          "category_type": "cosmetics",
+          "label": "Шампунь для волос Damage Protector",
+          "price": 10,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 6,
+          "category_type": "cosmetics",
+          "label": "Шампунь для волос Damage Protector",
+          "price": 10,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 7,
+          "category_type": "cosmetics",
+          "label": "Шампунь для волос Damage Protector",
+          "price": 10,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 8,
+          "category_type": "cosmetics",
+          "label": "Шампунь для волос Damage Protector",
+          "price": 10,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 9,
+          "category_type": "cosmetics",
+          "label": "Шампунь для волос Damage Protector",
+          "price": 10,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 10,
+          "category_type": "cosmetics",
+          "label": "Шампунь для волос Damage Protector",
+          "price": 10,
+          "img": "https://source.unsplash.com/random"
+        }
+      ]
+    },
+    {
+      "category": {
+        "id": 4,
+        "type": "entertainment",
+        "label": "Развлечения, творчество"
+      },
+      "items": [
+        {
+          "id": 1,
+          "category_type": "entertainment",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 2,
+          "category_type": "entertainment",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 3,
+          "category_type": "entertainment",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 4,
+          "category_type": "entertainment",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 5,
+          "category_type": "entertainment",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 6,
+          "category_type": "entertainment",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 7,
+          "category_type": "entertainment",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 8,
+          "category_type": "entertainment",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 9,
+          "category_type": "entertainment",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 10,
+          "category_type": "entertainment",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        }
+      ]
+    },
+    {
+      "category": { "id": 5, "type": "books", "label": "Книги" },
+      "items": [
+        {
+          "id": 1,
+          "category_type": "books",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 2,
+          "category_type": "books",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 3,
+          "category_type": "books",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 4,
+          "category_type": "books",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 5,
+          "category_type": "books",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 6,
+          "category_type": "books",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 7,
+          "category_type": "books",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 8,
+          "category_type": "books",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 9,
+          "category_type": "books",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 10,
+          "category_type": "books",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        }
+      ]
+    },
+    {
+      "category": {
+        "id": 6,
+        "type": "souvenirs",
+        "label": "Сувениры, галантерея"
+      },
+      "items": [
+        {
+          "id": 1,
+          "category_type": "souvenirs",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 2,
+          "category_type": "souvenirs",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 3,
+          "category_type": "souvenirs",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 4,
+          "category_type": "souvenirs",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 5,
+          "category_type": "souvenirs",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 6,
+          "category_type": "souvenirs",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 7,
+          "category_type": "souvenirs",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 8,
+          "category_type": "souvenirs",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 9,
+          "category_type": "souvenirs",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 10,
+          "category_type": "souvenirs",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        }
+      ]
+    },
+
+    {
+      "category": {
+        "id": 7,
+        "type": "stationery",
+        "label": "Канцтовары, учёба"
+      },
+      "items": [
+        {
+          "id": 1,
+          "category_type": "stationery",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 2,
+          "category_type": "stationery",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 3,
+          "category_type": "stationery",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 4,
+          "category_type": "stationery",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 5,
+          "category_type": "stationery",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 6,
+          "category_type": "stationery",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 7,
+          "category_type": "stationery",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 8,
+          "category_type": "stationery",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 9,
+          "category_type": "stationery",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 10,
+          "category_type": "stationery",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        }
+      ]
+    },
+
+    {
+      "category": {
+        "id": 8,
+        "type": "tourism",
+        "label": "Туризм, отдых, спорт"
+      },
+      "items": [
+        {
+          "id": 1,
+          "category_type": "tourism",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 2,
+          "category_type": "tourism",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 3,
+          "category_type": "tourism",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 4,
+          "category_type": "tourism",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 5,
+          "category_type": "tourism",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 6,
+          "category_type": "tourism",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 7,
+          "category_type": "tourism",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 8,
+          "category_type": "tourism",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 9,
+          "category_type": "tourism",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 10,
+          "category_type": "tourism",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        }
+      ]
+    },
+
+    {
+      "category": {
+        "id": 9,
+        "type": "technology",
+        "label": "Техника, электроника"
+      },
+      "items": [
+        {
+          "id": 1,
+          "category_type": "technology",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 2,
+          "category_type": "technology",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 3,
+          "category_type": "technology",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 4,
+          "category_type": "technology",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 5,
+          "category_type": "technology",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 6,
+          "category_type": "technology",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 7,
+          "category_type": "technology",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 8,
+          "category_type": "technology",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 9,
+          "category_type": "technology",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 10,
+          "category_type": "technology",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        }
+      ]
+    },
+
+    {
+      "category": {
+        "id": 10,
+        "type": "medicine",
+        "label": "Здоровье, медтехника"
+      },
+      "items": [
+        {
+          "id": 1,
+          "category_type": "medicine",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 2,
+          "category_type": "medicine",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 3,
+          "category_type": "medicine",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 4,
+          "category_type": "medicine",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 5,
+          "category_type": "medicine",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 6,
+          "category_type": "medicine",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 7,
+          "category_type": "medicine",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 8,
+          "category_type": "medicine",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 9,
+          "category_type": "medicine",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 10,
+          "category_type": "medicine",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        }
+      ]
+    },
+
+    {
+      "category": {
+        "id": 11,
+        "type": "products",
+        "label": "Продукты, деликатесы"
+      },
+      "items": [
+        {
+          "id": 1,
+          "category_type": "products",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 2,
+          "category_type": "products",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 3,
+          "category_type": "products",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 4,
+          "category_type": "products",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 5,
+          "category_type": "products",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 6,
+          "category_type": "products",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 7,
+          "category_type": "products",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 8,
+          "category_type": "products",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 9,
+          "category_type": "products",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        },
+        {
+          "id": 10,
+          "category_type": "products",
+          "label": "Lorem ipsum dolor sit amet",
+          "price": 99,
+          "img": "https://source.unsplash.com/random"
+        }
+      ]
+    }
+  ]
+}

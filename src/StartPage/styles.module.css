@@ -1,0 +1,7 @@
+.banner {
+  background: url("https://source.unsplash.com/random");
+  background-size: contain;
+}
+.menuBox {
+  margin-bottom: 10px;
+}

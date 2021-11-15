@@ -1,10 +1,12 @@
 import { createStore, combineReducers, applyMiddleware} from "redux";
 import thunk from "redux-thunk";
-import { sideMenuReducer } from "./sideMenuReducer";
+import { categoriesReducer } from "./categoriesReducer";
+import { popGoodsReducer } from "./popularGoodsReducer";
 
 
 const reducer = combineReducers({
-  sideMenuItems: sideMenuReducer
+  categoryItems: categoriesReducer,
+  popGoodsList: popGoodsReducer
 })
 
 
