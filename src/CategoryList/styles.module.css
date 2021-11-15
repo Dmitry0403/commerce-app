@@ -1,0 +1,17 @@
+.categoryList{
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    color:rgb(67, 76, 85);
+}
+
+.title {
+    background-color: lightblue;
+    text-align: center;
+    padding: 5px;
+}
+
+.goodsList{
+    display: flex;
+    flex-wrap: wrap;
+}

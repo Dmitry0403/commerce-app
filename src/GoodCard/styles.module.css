@@ -1,0 +1,10 @@
+.card {
+  width: 240px;
+  height: 240px;
+  overflow: hidden;
+  background-size: contain;
+  color: white;
+  font-size: 30px;
+  background-image: url("https://source.unsplash.com/random");
+}
+

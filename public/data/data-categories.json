@@ -1,0 +1,19 @@
+{
+  "categories": [
+    { "id": 1, "type": "house", "label": "Дом, сад, зоотовары" },
+    { "id": 2, "type": "children", "label": "Детям и мамам" },
+    { "id": 3, "type": "cosmetics", "label": "Косметика, парфюмерия" },
+    {
+      "id": 4,
+      "type": "entertainment",
+      "label": "Развлечения, творчество"
+    },
+    { "id": 5, "type": "books", "label": "Книги" },
+    { "id": 6, "type": "souvenirs", "label": "Сувениры, галантерея" },
+    { "id": 7, "type": "stationery", "label": "Канцтовары, учёба" },
+    { "id": 8, "type": "tourism", "label": "Туризм, отдых, спорт" },
+    { "id": 9, "type": "technology", "label": "Техника, электроника" },
+    { "id": 10, "type": "medicine", "label": "Здоровье, медтехника" },
+    { "id": 11, "type": "products", "label": "Продукты, деликатесы" }
+  ]
+}

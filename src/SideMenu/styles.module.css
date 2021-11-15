@@ -1,3 +1,18 @@
 .sideMenu {
-    list-style-type: none;
+  list-style-type: none;
+  font-size: 20px;
+  white-space: nowrap;
+}
+
+.sideMenu li {
+    margin-bottom: 10px;
+}
+
+.sideMenu a {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 1);
+}
+
+.sideMenu a:hover {
+  text-decoration: underline;
 }
