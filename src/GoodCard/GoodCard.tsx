@@ -13,10 +13,12 @@ export interface GoodsCardType {
 export const GoodsCard = (props: GoodsCardType) => {
   const { label, img, price } = props;
   const classCard = classNames(css.card, { backgroundImage: `url (${img})` });
-  const classTitle = { color: "white", fontSize: "25px" };
   return (
-    <Card title={label} className={classCard} headStyle={classTitle}>
-      {price + " руб."}
-    </Card>
+    <div className={css.mainCard}>
+      <Card className={classCard}>
+        <p className={css.title}>{label}</p>
+        <p>{price + " руб."}</p>
+      </Card>
+    </div>
   );
 };

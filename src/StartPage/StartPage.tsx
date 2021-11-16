@@ -19,13 +19,13 @@ export const StartPage: React.FC = () => {
   return (
     <Switch>
       <Route path="/">
-        <Row className={css.menuBox}>
-          <Col span={18} push={6} className={css.banner}></Col>
-          <Col span={6} pull={18}>
+        <Row className={css.menuBox} justify={"center"}>
+          <Col span={6}>
             <SideMenu />
           </Col>
+          <Col span={18} className={css.banner}></Col>
         </Row>
-        <Row>
+        <Row justify={"center"}>
           {popGoods.map((item) => (
             <CategoryList category={item.category} items={item.items} />
           ))}
