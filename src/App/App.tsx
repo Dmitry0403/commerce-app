@@ -1,12 +1,13 @@
 import "antd/dist/antd.css";
 import { StartPage } from "../StartPage";
-import { Footer } from "../Footer";
+import { Switch, Route } from "react-router-dom";
 
 export const App = () => {
   return (
-    <div>
-      <StartPage />
-      <Footer />
-    </div>
+    <Switch>
+      <Route path="/">
+        <StartPage />
+      </Route>
+    </Switch>
   );
 };

@@ -19,7 +19,7 @@ export const SideMenu: React.FC = () => {
     <Menu className={css.sideMenu}>
       {sideMenuItems.map((item) => (
         <Menu.Item key={item.id}>
-          <Link to="./">{item.label}</Link>
+          <Link to={item.type}>{item.label}</Link>
         </Menu.Item>
       ))}
     </Menu>

@@ -13,10 +13,12 @@ export const CategoryList = (props: CategoryListType) => {
   const { category, items } = props;
   return (
     <div className={css.categoryList}>
+      <Link to="./">
       <div className={css.title}>{category.label}</div>
+      </Link>
       <div className={css.goodsList}>
         {items.map((item) => (
-          <Link to="/">
+          <Link to={item.category_type}>
             <GoodsCard
               key={item.id}
               label={item.label}
