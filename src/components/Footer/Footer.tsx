@@ -1,6 +1,6 @@
 import css from "./styles.module.css";
 
-export const Footer = () => {
+export const Footer:React.FC = () => {
   return (
     <div className={css.footer}>
       Общество с ограниченной ответственностью «Приносим радость». Свидетельство

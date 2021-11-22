@@ -1,3 +1,3 @@
 import { RootState } from "../store";
 
-export const getSideMenuItems = (state:RootState) => state.categoryItems.categories
+export const setSideMenuItems = (state:RootState) => state.categoryItems.categories

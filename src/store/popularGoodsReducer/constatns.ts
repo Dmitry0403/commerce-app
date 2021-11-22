@@ -1,11 +1,12 @@
 import { LOAD_STATUSES } from "../constatns";
-import { CategoryListType } from "../../CategoryList/CategoryList";
+import { CategoryListType } from "../../components/CategoryList/CategoryList";
 
 export enum POP_GOODS_ACTIONS {
     GET_POP_GOODS = "getPopGoods",
     GET_POP_GOODS_SUCCESS = "getPopGoodsSuccess",
     GET_POP_GOODS_FAILURE = "getPopGoodsFalure"
 }
+
 
 export interface GoodsType {
     id?: number;
