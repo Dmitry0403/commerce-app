@@ -8,10 +8,11 @@ export interface GoodsCardType {
   label: string;
   price: number;
   img: string;
+  content?: string;
 }
 
-export const GoodsCard = (props: GoodsCardType) => {
-  const { label, img, price } = props;
+export const GoodsCard: React.FC<GoodsCardType> = (props) => {
+  const { label, img, price} = props;
   const classCard = classNames(css.card, { backgroundImage: `url (${img})` });
   return (
     <div className={css.mainCard}>

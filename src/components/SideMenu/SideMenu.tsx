@@ -1,13 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
-import { getSideMenuItems } from "../store/categoriesReducer";
+import { setSideMenuItems } from "../../store/categoriesReducer";
 import { useEffect } from "react";
-import { menuActions } from "../store/categoriesReducer";
+import { menuActions } from "../../store/categoriesReducer";
 import { Link } from "react-router-dom";
 import { Menu } from "antd";
 import css from "./styles.module.css";
 
 export const SideMenu: React.FC = () => {
-  const sideMenuItems = useSelector(getSideMenuItems);
+  const sideMenuItems = useSelector(setSideMenuItems);
   const dispatch = useDispatch();
   const fetchCategoryItems = menuActions.fetchCategoryItems;
 
@@ -19,7 +19,7 @@ export const SideMenu: React.FC = () => {
     <Menu className={css.sideMenu}>
       {sideMenuItems.map((item) => (
         <Menu.Item key={item.id}>
-          <Link to="./">{item.label}</Link>
+          <Link to={item.type}>{item.label}</Link>
         </Menu.Item>
       ))}
     </Menu>

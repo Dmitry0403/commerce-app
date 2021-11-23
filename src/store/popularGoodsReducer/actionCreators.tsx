@@ -14,6 +14,7 @@ export const getPopGoodsFailure = () => ({
   type: POP_GOODS_ACTIONS.GET_POP_GOODS_FAILURE,
 });
 
+
 export const fetchPopGoods = () => async (dispatch: any) => {
   dispatch(getPopGoods());
   try {

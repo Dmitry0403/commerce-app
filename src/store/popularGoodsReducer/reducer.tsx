@@ -1,7 +1,7 @@
 import { LOAD_STATUSES } from "../constatns";
 import { Action } from "redux";
 import { PopGoodsType, POP_GOODS_ACTIONS } from "./constatns";
-import { CategoryListType } from "../../CategoryList/CategoryList";
+import { CategoryListType } from "../../components/CategoryList/CategoryList";
 
 const INITIAL_STATE = { popGoods: [], loadStatus: LOAD_STATUSES.UNKNOWN };
 
