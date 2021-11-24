@@ -8,7 +8,7 @@ const INITIAL_STATE = {
     category_type: "",
     id: "",
   },
-  stateButton: false,
+  stateButton: "Положить в корзину",
 };
 
 export const dataPageReducer = (
@@ -38,13 +38,13 @@ export const dataPageReducer = (
         },
       };
     case PARAMS_ACTION.GET_BUTTON_STATUS:
-      const stateButton = action as {
+      const  {stateButton} = action as {
         type: PARAMS_ACTION.GET_BUTTON_STATUS;
-        payload: boolean;
+        stateButton: string;
       };
       return {
         ...store,
-        stateButton: !stateButton,
+        stateButton
       };
 
     default:
