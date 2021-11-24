@@ -2,65 +2,49 @@ import css from "./styles.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { dataPageActions } from "../../store/dataPageReducer";
-import { PARAMS_ACTION } from "../../store/dataPageReducer";
 import { takeDataGoodsPage } from "../../store/popularGoodsReducer/selectors";
-import { useParams } from "react-router-dom";
-import { GoodsCardType } from "../GoodsCard";
-import { createBrowserHistory } from "history";
+import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "antd";
 
 export const GoodsPage: React.FC = () => {
-  const { type, id } = useParams();
+  const { category_type, id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  let getGoodsParams = {
-    type: PARAMS_ACTION.GET_GOODS_PARAMS,
-    params: { category_type: "unkouwn", id: "0" },
-  };
+  useEffect(() => {
+    if (!category_type || !id) {
+      return;
+    }
 
-  if (type && id) {
     const params = {
-      category_type: type,
+      category_type,
       id,
     };
-    getGoodsParams = dataPageActions.getGoodsParams(params);
-  }
 
-  useEffect(() => {
+    const getGoodsParams = dataPageActions.getGoodsParams(params);
+
     dispatch(getGoodsParams);
-  }, [dispatch, getGoodsParams]);
+  }, [dispatch, category_type, id]);
 
   const dataGoodsPage = useSelector(takeDataGoodsPage);
 
-  let data: GoodsCardType = {
-    id: 0,
-    category_type: "unknown",
-    label: "ТОВАР НЕ НАЙДЕН",
-    price: 0,
-    img: "unknown",
-    content: "unknown",
-  };
-  if (dataGoodsPage) {
-    data = dataGoodsPage;
-  }
-  if (data.label === "ТОВАР НЕ НАЙДЕН") {
-    const history = createBrowserHistory();
+  if (!dataGoodsPage) {
     return (
       <div className={css.error}>
         ТОВАР НЕ НАЙДЕН,
-        <span onClick={() => history.back()}>ВЕРНУТЬСЯ НАЗАД </span>
+        <span onClick={() => navigate(-1)}>ВЕРНУТЬСЯ НАЗАД </span>
       </div>
     );
   } else
     return (
       <div className={css.page}>
         <div className={css.image}>
-          <img src={data.img} />
+          <img src={dataGoodsPage.img} alt={dataGoodsPage.label}/>
         </div>
         <div className={css.subject}>
-          <div className={css.label}>{data.label}</div>
-          <div className={css.content}>{data.content}</div>
-          <div className={css.price}>{data.price} руб.</div>
+          <div className={css.label}>{dataGoodsPage.label}</div>
+          <div className={css.content}>{dataGoodsPage.content}</div>
+          <div className={css.price}>{dataGoodsPage.price} руб.</div>
           <Button className={css.button}>Положить в корзину</Button>
         </div>
       </div>

@@ -6,7 +6,7 @@ export const Header: React.FC = () => {
   const { Header } = Layout;
   const { Search } = Input;
   return (
-    <Header className={css.header}>
+    <Header>
       <Link to="/">
         <div className={css.logos} />
       </Link>
