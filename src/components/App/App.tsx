@@ -1,5 +1,5 @@
 import "antd/dist/antd.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Footer } from "../Footer";
 import { Header } from "../Header";
 import { StartPage } from "../StartPage";
@@ -11,9 +11,10 @@ export const App = () => {
     <div>
       <Header />
       <Routes>
-        <Route path="/:type/:id" element={<GoodsPage />} />
+        <Route path="/:category_type/:id" element={<GoodsPage />} />
         <Route path="/:type" element={<CategoryPage />} />
         <Route path="/" element={<StartPage />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Footer />
     </div>
