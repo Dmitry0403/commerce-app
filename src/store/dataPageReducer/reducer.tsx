@@ -16,18 +16,18 @@ export const dataPageReducer = (
   action: Action<PARAMS_ACTION>
 ): DataPagesType => {
   switch (action.type) {
-    case PARAMS_ACTION.GET_CATEGORY_PARAMS:
+    case PARAMS_ACTION.SET_CATEGORY_PARAMS:
       const { payload } = action as {
-        type: PARAMS_ACTION.GET_CATEGORY_PARAMS;
+        type: PARAMS_ACTION.SET_CATEGORY_PARAMS;
         payload: string;
       };
       return {
         ...store,
         type: payload,
       };
-    case PARAMS_ACTION.GET_GOODS_PARAMS:
+    case PARAMS_ACTION.SET_GOODS_PARAMS:
       const { params } = action as {
-        type: PARAMS_ACTION.GET_GOODS_PARAMS;
+        type: PARAMS_ACTION.SET_GOODS_PARAMS;
         params: GoodsParamsType;
       };
       return {
@@ -37,9 +37,9 @@ export const dataPageReducer = (
           id: params.id,
         },
       };
-    case PARAMS_ACTION.GET_BUTTON_STATUS:
+    case PARAMS_ACTION.SET_BUTTON_STATUS:
       const  {stateButton} = action as {
-        type: PARAMS_ACTION.GET_BUTTON_STATUS;
+        type: PARAMS_ACTION.SET_BUTTON_STATUS;
         stateButton: string;
       };
       return {

@@ -1,22 +1,22 @@
 import { RootState } from "../store";
 import { createSelector } from "reselect";
 import { CategoryListType } from "../../components/CategoryList/CategoryList";
-import { takeDataPage } from "../dataPageReducer";
+import { getDataPage } from "../dataPageReducer";
 
-export const takePopGoods = (state: RootState): CategoryListType[] =>
+export const getPopGoods = (state: RootState): CategoryListType[] =>
   state.popGoodsList.popGoods;
 
-export const takeDataCategoryPage = createSelector(
-  takePopGoods,
-  takeDataPage,
+export const getDataCategoryPage = createSelector(
+  getPopGoods,
+  getDataPage,
   (popGoods, dataPage) => {
     return popGoods.find((item) => item.category.type === dataPage.type);
   }
 );
 
-export const takeDataGoodsPage = createSelector(
-  takePopGoods,
-  takeDataPage,
+export const getDataGoodsPage = createSelector(
+  getPopGoods,
+  getDataPage,
   (popGoods, dataPage) => {
     const selectedCategory = popGoods.find(
       (item) => item.category.type === dataPage.goodsParams.category_type

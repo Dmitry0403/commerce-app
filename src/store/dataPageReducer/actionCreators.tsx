@@ -2,18 +2,18 @@ import { PARAMS_ACTION } from "./constans";
 import type { GoodsParamsType, CartType } from "./constans";
 import type { GoodsCardType } from "../../components/GoodsCard";
 
-export const getCategoryParams = (payload: string) => ({
-  type: PARAMS_ACTION.GET_CATEGORY_PARAMS,
+export const setCategoryParams = (payload: string) => ({
+  type: PARAMS_ACTION.SET_CATEGORY_PARAMS,
   payload,
 });
 
-export const getGoodsParams = (params: GoodsParamsType) => ({
-  type: PARAMS_ACTION.GET_GOODS_PARAMS,
+export const setGoodsParams = (params: GoodsParamsType) => ({
+  type: PARAMS_ACTION.SET_GOODS_PARAMS,
   params,
 });
 
-export const getButtonStatus = (stateButton: string) => ({
-  type: PARAMS_ACTION.GET_BUTTON_STATUS,
+export const setButtonStatus = (stateButton: string) => ({
+  type: PARAMS_ACTION.SET_BUTTON_STATUS,
   stateButton,
 });
 
@@ -39,5 +39,5 @@ export const addToCart = (data: GoodsCardType) => (dispatch: any) => {
   const newCart = cart.concat([newGoodsInCart]);
   localStorage.setItem("Cart", JSON.stringify(newCart));
 
-  dispatch(getButtonStatus("Уже в корзине"));
+  dispatch(setButtonStatus("Уже в корзине"));
 };

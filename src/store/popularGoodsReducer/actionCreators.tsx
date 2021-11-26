@@ -2,16 +2,16 @@ import { POP_GOODS_ACTIONS } from "./constatns";
 import { GoodsType } from "./constatns";
 
 export const getPopGoods = () => ({
-  type: POP_GOODS_ACTIONS.GET_POP_GOODS,
+  type: POP_GOODS_ACTIONS.SET_POP_GOODS,
 });
 
 export const getPopGoodsSuccess = (payload: GoodsType[]) => ({
-  type: POP_GOODS_ACTIONS.GET_POP_GOODS_SUCCESS,
+  type: POP_GOODS_ACTIONS.SET_POP_GOODS_SUCCESS,
   payload,
 });
 
 export const getPopGoodsFailure = () => ({
-  type: POP_GOODS_ACTIONS.GET_POP_GOODS_FAILURE,
+  type: POP_GOODS_ACTIONS.SET_POP_GOODS_FAILURE,
 });
 
 

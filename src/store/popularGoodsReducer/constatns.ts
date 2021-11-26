@@ -2,9 +2,9 @@ import { LOAD_STATUSES } from "../constatns";
 import { CategoryListType } from "../../components/CategoryList/CategoryList";
 
 export enum POP_GOODS_ACTIONS {
-    GET_POP_GOODS = "getPopGoods",
-    GET_POP_GOODS_SUCCESS = "getPopGoodsSuccess",
-    GET_POP_GOODS_FAILURE = "getPopGoodsFalure"
+    SET_POP_GOODS = "setPopGoods",
+    SET_POP_GOODS_SUCCESS = "setPopGoodsSuccess",
+    SET_POP_GOODS_FAILURE = "setPopGoodsFalure"
 }
 
 

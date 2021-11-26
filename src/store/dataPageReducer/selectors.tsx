@@ -1,5 +1,5 @@
 import { RootState } from "../store";
 
-export const takeDataPage = (state: RootState) => state.dataPage;
+export const getDataPage = (state: RootState) => state.dataPage;
 
-export const takeButtonStatus = (state: RootState) => state.dataPage.stateButton;
+export const getButtonStatus = (state: RootState) => state.dataPage.stateButton;

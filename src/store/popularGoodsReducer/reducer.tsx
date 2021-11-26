@@ -10,14 +10,14 @@ export const popGoodsReducer = (
   action: Action<POP_GOODS_ACTIONS>
 ): PopGoodsType => {
   switch (action.type) {
-    case POP_GOODS_ACTIONS.GET_POP_GOODS:
+    case POP_GOODS_ACTIONS.SET_POP_GOODS:
       return {
         ...store,
         loadStatus: LOAD_STATUSES.LOADING,
       };
-    case POP_GOODS_ACTIONS.GET_POP_GOODS_SUCCESS:
+    case POP_GOODS_ACTIONS.SET_POP_GOODS_SUCCESS:
       const { payload } = action as {
-        type: POP_GOODS_ACTIONS.GET_POP_GOODS_SUCCESS;
+        type: POP_GOODS_ACTIONS.SET_POP_GOODS_SUCCESS;
         payload: CategoryListType[];
       };
       return {
@@ -25,7 +25,7 @@ export const popGoodsReducer = (
         popGoods: payload,
         loadStatus: LOAD_STATUSES.SUCCESS,
       };
-    case POP_GOODS_ACTIONS.GET_POP_GOODS_FAILURE:
+    case POP_GOODS_ACTIONS.SET_POP_GOODS_FAILURE:
       return {
         ...store,
         loadStatus: LOAD_STATUSES.FAILURE,

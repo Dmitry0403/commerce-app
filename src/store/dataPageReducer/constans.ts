@@ -15,7 +15,7 @@ export interface CartType {
 }
 
 export enum PARAMS_ACTION {
-  GET_CATEGORY_PARAMS = "getCategoryParams",
-  GET_GOODS_PARAMS = "getGoodsParams",
-  GET_BUTTON_STATUS = "getButtonStatus"
+  SET_CATEGORY_PARAMS = "setCategoryParams",
+  SET_GOODS_PARAMS = "setGoodsParams",
+  SET_BUTTON_STATUS = "setButtonStatus"
 }
