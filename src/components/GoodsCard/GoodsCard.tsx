@@ -3,8 +3,8 @@ import classNames from "classnames";
 import css from "./styles.module.css";
 
 export interface GoodsCardType {
-  id?: number;
-  category_type?: string;
+  id: number;
+  category_type: string;
   label: string;
   price: number;
   img: string;

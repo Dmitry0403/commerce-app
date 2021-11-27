@@ -1,7 +1,7 @@
 import css from "./styles.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { dataPageActions } from "../../store/dataPageReducer";
+import { dataPageActions } from "../../store/paramsPageReducer";
 import { getDataCategoryPage } from "../../store/popularGoodsReducer/selectors";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { GoodsCard } from "../GoodsCard";
@@ -35,7 +35,13 @@ export const CategoryPage: React.FC = () => {
         <div className={css.goodsList}>
           {dataCategoryPage.items.map((item) => (
             <Link to={`/${item.category_type}/${item.id}`} key={item.id}>
-              <GoodsCard label={item.label} img={item.img} price={item.price} />
+              <GoodsCard
+                label={item.label}
+                img={item.img}
+                price={item.price}
+                id={item.id}
+                category_type={item.category_type}
+              />
             </Link>
           ))}
         </div>
