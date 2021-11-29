@@ -1,1 +1,1 @@
-export { GoodsPage } from "./GoodsPage";
+export { GoodsPage, BUTTON_STATUS } from "./GoodsPage";

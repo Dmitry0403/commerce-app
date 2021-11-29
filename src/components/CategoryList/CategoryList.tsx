@@ -19,8 +19,14 @@ export const CategoryList: React.FC<CategoryListType> = (props) => {
       </Link>
       <div className={css.goodsList}>
         {items.map((item) => (
-          <Link to={`/${item.category_type}/${item.id}`} key={item.id}>
-            <GoodsCard label={item.label} img={item.img} price={item.price} />
+          <Link to={`/${item.categoryTypeId}/${item.id}`} key={item.id}>
+            <GoodsCard
+              label={item.label}
+              img={item.img}
+              price={item.price}
+              id={item.id}
+              categoryTypeId={item.categoryTypeId}
+            />
           </Link>
         ))}
       </div>

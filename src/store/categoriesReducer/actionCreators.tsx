@@ -1,28 +1,25 @@
 import { CATEGORIES_ACTIONS, CategoryType } from "./constatns";
+import { Api } from "../../api";
 
-
-export const getCategoryItems = () => ({
-  type: CATEGORIES_ACTIONS.GET_CATEGORIES,
+export const setCategoryItems = () => ({
+  type: CATEGORIES_ACTIONS.SET_CATEGORIES,
 });
 
-export const getCategoriesSuccess = (payload: CategoryType[]) => ({
-  type: CATEGORIES_ACTIONS.GET_CATEGORIES_SUCCESS,
+export const setCategoriesSuccess = (payload: CategoryType[]) => ({
+  type: CATEGORIES_ACTIONS.SET_CATEGORIES_SUCCESS,
   payload,
 });
 
-export const getCategoriesFailure = () => ({
-  type: CATEGORIES_ACTIONS.GET_CATEGORIES_FAILURE,
+export const setCategoriesFailure = () => ({
+  type: CATEGORIES_ACTIONS.SET_CATEGORIES_FAILURE,
 });
 
 export const fetchCategoryItems = () => async (dispatch: any) => {
-  dispatch(getCategoryItems());
+  dispatch(setCategoryItems());
   try {
-    const resp = await fetch("./data/data-categories.json");
-    if (resp.ok) {
-      const payload = await resp.json();
-      dispatch(getCategoriesSuccess(payload.categories));
-    } else throw new Error("error");
+    const payload = await Api.prototype.getCategories();
+    dispatch(setCategoriesSuccess(payload.categories));
   } catch (error) {
-    dispatch(getCategoriesFailure());
+    dispatch(setCategoriesFailure());
   }
 };

@@ -1,48 +1,51 @@
 import css from "./styles.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { dataPageActions } from "../../store/dataPageReducer";
-import { takeDataGoodsPage } from "../../store/popularGoodsReducer/selectors";
+import { dataPageActions } from "../../store/paramsPageReducer";
+import { getDataGoodsPage } from "../../store/popularGoodsReducer/selectors";
 import { useParams, useNavigate } from "react-router-dom";
-import { takeButtonStatus } from "../../store/dataPageReducer";
-import { getButtonStatus } from "../../store/dataPageReducer/actionCreators";
 import { Button } from "antd";
-import { CartType } from "../../store/dataPageReducer/constans";
+import { getCart } from "../../store/cartReducer/selectors";
+import { cartActions } from "../../store/cartReducer";
+
+export enum BUTTON_STATUS {
+  putInCart = "Положить в корзину",
+  delFromCart = "Удалить из корзины"
+}
 
 export const GoodsPage: React.FC = () => {
-  const { category_type, id } = useParams();
+  const { type, id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!category_type || !id) {
+    if (!type || !id) {
       return;
     }
 
-    if (localStorage.getItem("Cart")) {
-      let cart = JSON.parse(localStorage.getItem("Cart") as string);
-      if (
-        cart.find(
-          (item: CartType) =>
-            item.type === category_type && item.id === Number(id)
-        )
-      ) {
-        dispatch(getButtonStatus("Уже в корзине"));
-      } else dispatch(getButtonStatus("Положить в корзину"));
-    }
-
     const params = {
-      category_type,
+      type,
       id,
     };
 
-    const getGoodsParams = dataPageActions.getGoodsParams(params);
+    const getGoodsParams = dataPageActions.setGoodsParams(params);
 
     dispatch(getGoodsParams);
-  }, [dispatch, category_type, id]);
+  }, [dispatch, type, id]);
 
-  const dataGoodsPage = useSelector(takeDataGoodsPage);
-  const buttonStatus = useSelector(takeButtonStatus);
+  const dataGoodsPage = useSelector(getDataGoodsPage);
+  const cart = useSelector(getCart);
+  let buttonStatus = BUTTON_STATUS.putInCart;
+
+  if (
+    cart.find(
+      (item) =>
+        item.category === dataGoodsPage?.categoryTypeId &&
+        item.id === dataGoodsPage.id
+    )
+  ) {
+    buttonStatus = BUTTON_STATUS.delFromCart;
+  }
 
   if (!dataGoodsPage) {
     return (
@@ -63,7 +66,9 @@ export const GoodsPage: React.FC = () => {
           <div className={css.price}>{dataGoodsPage.price} руб.</div>
           <Button
             className={css.button}
-            onClick={() => dispatch(dataPageActions.addToCart(dataGoodsPage))}
+            onClick={() =>
+              dispatch(cartActions.changeCart(dataGoodsPage, buttonStatus))
+            }
           >
             {buttonStatus}
           </Button>

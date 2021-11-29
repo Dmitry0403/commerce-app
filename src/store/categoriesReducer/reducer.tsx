@@ -9,14 +9,14 @@ export const categoriesReducer = (
   action: Action<CATEGORIES_ACTIONS>
 ): SideMenuType => {
   switch (action.type) {
-    case CATEGORIES_ACTIONS.GET_CATEGORIES:
+    case CATEGORIES_ACTIONS.SET_CATEGORIES:
       return {
         ...store,
         loadStatus: LOAD_STATUSES.LOADING,
       };
-    case CATEGORIES_ACTIONS.GET_CATEGORIES_SUCCESS:
+    case CATEGORIES_ACTIONS.SET_CATEGORIES_SUCCESS:
       const { payload } = action as {
-        type: CATEGORIES_ACTIONS.GET_CATEGORIES_SUCCESS;
+        type: CATEGORIES_ACTIONS.SET_CATEGORIES_SUCCESS;
         payload: CategoryType[];
       };
       return {
@@ -24,7 +24,7 @@ export const categoriesReducer = (
         categories: payload,
         loadStatus: LOAD_STATUSES.SUCCESS,
       };
-    case CATEGORIES_ACTIONS.GET_CATEGORIES_FAILURE:
+    case CATEGORIES_ACTIONS.SET_CATEGORIES_FAILURE:
       return {
         ...store,
         loadStatus: LOAD_STATUSES.FAILURE,

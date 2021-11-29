@@ -1,5 +1,5 @@
 export { popGoodsReducer } from "./reducer";
-export { takePopGoods } from "./selectors"
+export { getPopGoods, getPopGoodsStatus } from "./selectors"
 export * as popGoodsAction from "./actionCreators" 
 
 export type { GoodsType } from './constatns'
