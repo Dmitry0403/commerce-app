@@ -1,11 +1,12 @@
 import { POP_GOODS_ACTIONS } from "./constatns";
-import { GoodsType } from "./constatns";
+import { CategoryListType } from "../../components/CategoryList";
+import { Api } from "../../api";
 
 export const getPopGoods = () => ({
   type: POP_GOODS_ACTIONS.SET_POP_GOODS,
 });
 
-export const getPopGoodsSuccess = (payload: GoodsType[]) => ({
+export const getPopGoodsSuccess = (payload: CategoryListType[]) => ({
   type: POP_GOODS_ACTIONS.SET_POP_GOODS_SUCCESS,
   payload,
 });
@@ -14,15 +15,11 @@ export const getPopGoodsFailure = () => ({
   type: POP_GOODS_ACTIONS.SET_POP_GOODS_FAILURE,
 });
 
-
 export const fetchPopGoods = () => async (dispatch: any) => {
   dispatch(getPopGoods());
   try {
-    const resp = await fetch("./data/data-popular-categories.json");
-    if (resp.ok) {
-      const payload = await resp.json();
-      dispatch(getPopGoodsSuccess(payload.popularCategory));
-    } else throw new Error("error");
+    const payload = await Api.prototype.getPopularCategories();
+    dispatch(getPopGoodsSuccess(payload));
   } catch (error) {
     dispatch(getPopGoodsFailure());
   }

@@ -12,3 +12,20 @@
   align-items: center;
   background: white;
 }
+
+:global(.ant-badge) {
+  font-size: 25px;
+}
+
+:global(.ant-input-search
+    > .ant-input-group
+    > .ant-input-group-addon:last-child
+    .ant-input-search-button) {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.headerStyle {
+  display: flex;
+  justify-content: space-between;
+}

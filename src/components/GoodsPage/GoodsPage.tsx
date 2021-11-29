@@ -40,7 +40,7 @@ export const GoodsPage: React.FC = () => {
   if (
     cart.find(
       (item) =>
-        item.category === dataGoodsPage?.category_type &&
+        item.category === dataGoodsPage?.categoryTypeId &&
         item.id === dataGoodsPage.id
     )
   ) {

@@ -2,6 +2,7 @@ import { GoodsCardType } from "../../components/GoodsCard";
 import type { CartType } from "./constans";
 import { CART_ACTIONS } from "./constans";
 import { BUTTON_STATUS } from "../../components/GoodsPage";
+import { Api } from "../../api";
 
 export const setCart = () => ({
   type: CART_ACTIONS.SET_CART,
@@ -29,11 +30,8 @@ export const delFromCart = (goodsFromCart: CartType) => ({
 export const fetchCart = () => async (dispatch: any) => {
   dispatch(setCart());
   try {
-    const resp = await fetch("/");
-    if (resp.ok) {
-      const payload = await resp.json();
-      dispatch(setCartSuccess(payload));
-    } else throw new Error("error");
+    const payload = await Api.prototype.getСart();
+    dispatch(setCartSuccess(payload));
   } catch (error) {
     dispatch(setCartFailure());
   }
@@ -42,7 +40,7 @@ export const fetchCart = () => async (dispatch: any) => {
 export const changeCart =
   (data: GoodsCardType, status: string) => (dispatch: any) => {
     const goods: CartType = {
-      category: data.category_type,
+      category: data.categoryTypeId,
       id: data.id,
     };
     status === BUTTON_STATUS.delFromCart

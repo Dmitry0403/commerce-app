@@ -34,13 +34,13 @@ export const CategoryPage: React.FC = () => {
         <div className={css.title}>{dataCategoryPage.category.label}</div>
         <div className={css.goodsList}>
           {dataCategoryPage.items.map((item) => (
-            <Link to={`/${item.category_type}/${item.id}`} key={item.id}>
+            <Link to={`/${item.categoryTypeId}/${item.id}`} key={item.id}>
               <GoodsCard
                 label={item.label}
                 img={item.img}
                 price={item.price}
                 id={item.id}
-                category_type={item.category_type}
+                categoryTypeId={item.categoryTypeId}
               />
             </Link>
           ))}

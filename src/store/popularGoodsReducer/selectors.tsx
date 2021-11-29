@@ -6,6 +6,8 @@ import { getParamsPage } from "../paramsPageReducer";
 export const getPopGoods = (state: RootState): CategoryListType[] =>
   state.popGoodsList.popGoods;
 
+export const getPopGoodsStatus = (state: RootState) => state.popGoodsList.loadStatus
+
 export const getDataCategoryPage = createSelector(
   getPopGoods,
   getParamsPage,

@@ -1,5 +1,5 @@
 import { CATEGORIES_ACTIONS, CategoryType } from "./constatns";
-
+import { Api } from "../../api";
 
 export const setCategoryItems = () => ({
   type: CATEGORIES_ACTIONS.SET_CATEGORIES,
@@ -17,11 +17,8 @@ export const setCategoriesFailure = () => ({
 export const fetchCategoryItems = () => async (dispatch: any) => {
   dispatch(setCategoryItems());
   try {
-    const resp = await fetch("./data/data-categories.json");
-    if (resp.ok) {
-      const payload = await resp.json();
-      dispatch(setCategoriesSuccess(payload.categories));
-    } else throw new Error("error");
+    const payload = await Api.prototype.getCategories();
+    dispatch(setCategoriesSuccess(payload.categories));
   } catch (error) {
     dispatch(setCategoriesFailure());
   }

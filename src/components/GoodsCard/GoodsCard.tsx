@@ -4,7 +4,7 @@ import css from "./styles.module.css";
 
 export interface GoodsCardType {
   id: number;
-  category_type: string;
+  categoryTypeId: string;
   label: string;
   price: number;
   img: string;

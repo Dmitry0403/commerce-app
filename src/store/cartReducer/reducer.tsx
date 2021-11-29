@@ -46,7 +46,9 @@ export const cartReducer = (
         goodsFromCart: CartType;
       };
       const fromCart = store.cart.filter(
-        (item) => item.category !== goodsFromCart.category && item.id !== goodsFromCart.id
+        (item) =>
+          item.category !== goodsFromCart.category &&
+          item.id !== goodsFromCart.id
       );
       return {
         ...store,
