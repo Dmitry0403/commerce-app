@@ -1,4 +1,5 @@
-import type { CartType, CartStateType } from "./constans";
+import type { CartStateType } from "./constans";
+import type { GoodsCardType } from "../goodsReducer";
 import { CART_ACTIONS } from "./constans";
 import { LOAD_STATUSES } from "../constatns";
 import { Action } from "redux";
@@ -18,7 +19,7 @@ export const cartReducer = (
     case CART_ACTIONS.SET_CART_SUCCESS:
       let { payload } = action as {
         type: CART_ACTIONS.SET_CART_SUCCESS;
-        payload: CartType[];
+        payload: GoodsCardType[];
       };
       return {
         ...store,
@@ -33,7 +34,7 @@ export const cartReducer = (
     case CART_ACTIONS.PUT_IN_CART:
       const { goodsInCart } = action as {
         type: CART_ACTIONS.PUT_IN_CART;
-        goodsInCart: CartType;
+        goodsInCart: GoodsCardType;
       };
       const inCart = store.cart.concat([goodsInCart]);
       return {
@@ -43,12 +44,10 @@ export const cartReducer = (
     case CART_ACTIONS.DEL_FROM_CART:
       const { goodsFromCart } = action as {
         type: CART_ACTIONS.DEL_FROM_CART;
-        goodsFromCart: CartType;
+        goodsFromCart: GoodsCardType;
       };
       const fromCart = store.cart.filter(
-        (item) =>
-          item.category !== goodsFromCart.category &&
-          item.id !== goodsFromCart.id
+        (item) => item.id !== goodsFromCart.id
       );
       return {
         ...store,

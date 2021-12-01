@@ -2,15 +2,15 @@ import { createStore, combineReducers, applyMiddleware, compose} from "redux";
 import thunk from "redux-thunk";
 import { categoriesReducer } from "./categoriesReducer";
 import { popGoodsReducer } from "./popularGoodsReducer";
-import { paramsPageReducer } from "./paramsPageReducer";
 import { cartReducer } from "./cartReducer";
+import { goodsReducer } from "./goodsReducer";
 
 
 const reducer = combineReducers({
   categoryItems: categoriesReducer,
   popGoodsList: popGoodsReducer,
-  paramsPage: paramsPageReducer,
-  cartData: cartReducer
+  cartData: cartReducer,
+  goodsData: goodsReducer
 })
 
 

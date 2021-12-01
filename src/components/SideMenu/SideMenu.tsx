@@ -10,14 +10,15 @@ import { LOAD_STATUSES } from "../../store/constatns";
 import { Loader } from "../Loader";
 
 export const SideMenu: React.FC = () => {
-  const sideMenuItems = useSelector(getSideMenuItems);
   const dispatch = useDispatch();
   const fetchCategoryItems = menuActions.fetchCategoryItems;
   const loadStatusMenu = useSelector(getLoadStatusMenu);
+  const sideMenuItems = useSelector(getSideMenuItems);
+  const params: string = ''
 
   useEffect(() => {
-    dispatch(fetchCategoryItems());
-  }, [dispatch, fetchCategoryItems]);
+    dispatch(fetchCategoryItems(params));
+  }, [dispatch, fetchCategoryItems, params]);
 
   return (
     <Menu className={css.sideMenu}>
@@ -25,7 +26,7 @@ export const SideMenu: React.FC = () => {
       {loadStatusMenu === LOAD_STATUSES.SUCCESS &&
         sideMenuItems.map((item) => (
           <Menu.Item key={item.id}>
-            <Link to={item.type}>{item.label}</Link>
+            <Link to={`/category/${String(item.id)}`}>{item.label}</Link>
           </Menu.Item>
         ))}
       {loadStatusMenu === LOAD_STATUSES.FAILURE && (
