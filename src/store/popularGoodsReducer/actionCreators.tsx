@@ -24,3 +24,6 @@ export const fetchPopGoods = () => async (dispatch: any) => {
     dispatch(getPopGoodsFailure());
   }
 };
+
+
+

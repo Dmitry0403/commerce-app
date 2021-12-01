@@ -1,27 +1,38 @@
 import css from "./styles.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { dataPageActions } from "../../store/paramsPageReducer";
-import { getDataCategoryPage } from "../../store/popularGoodsReducer/selectors";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { GoodsCard } from "../GoodsCard";
+import { getSideMenuItems } from "../../store/categoriesReducer";
+import {
+  getGoods,
+  getGoodsLoadStatus,
+  goodsAction,
+} from "../../store/goodsReducer";
+import { Loader } from "../Loader";
+import { LOAD_STATUSES } from "../../store/constatns";
 
 export const CategoryPage: React.FC = () => {
-  const { type } = useParams();
+  const { typeId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!type) {
+    if (!typeId) {
       return;
     }
-    const setCategoryParams = dataPageActions.setCategoryParams(type);
-    dispatch(setCategoryParams);
-  }, [dispatch, type]);
 
-  const dataCategoryPage = useSelector(getDataCategoryPage);
+    const categoryParams = "ids=" + typeId;
+    const goodsParams = "categoryTypeIds=" + typeId;
 
-  if (!dataCategoryPage) {
+    dispatch(goodsAction.fetchCategoryGoods(categoryParams, goodsParams));
+  }, [dispatch, typeId]);
+
+  const dataCategory = useSelector(getSideMenuItems);
+  const dataGoods = useSelector(getGoods);
+  const pageStatus = useSelector(getGoodsLoadStatus);
+
+  if (!dataCategory || !dataGoods) {
     return (
       <div className={css.error}>
         СТРАНИЦА НЕ НАЙДЕНА,
@@ -30,21 +41,29 @@ export const CategoryPage: React.FC = () => {
     );
   } else
     return (
-      <div className={css.categoryList}>
-        <div className={css.title}>{dataCategoryPage.category.label}</div>
-        <div className={css.goodsList}>
-          {dataCategoryPage.items.map((item) => (
-            <Link to={`/${item.categoryTypeId}/${item.id}`} key={item.id}>
-              <GoodsCard
-                label={item.label}
-                img={item.img}
-                price={item.price}
-                id={item.id}
-                categoryTypeId={item.categoryTypeId}
-              />
-            </Link>
-          ))}
-        </div>
+      <div>
+        {pageStatus === LOAD_STATUSES.LOADING && <Loader />}
+        {pageStatus === LOAD_STATUSES.SUCCESS && (
+          <div className={css.categoryList}>
+            <div className={css.title}>{dataCategory[0].label}</div>
+            <div className={css.goodsList}>
+              {dataGoods.map((item) => (
+                <Link to={`/product/${item.id}`} key={item.id}>
+                  <GoodsCard
+                    label={item.label}
+                    img={item.img}
+                    price={item.price}
+                    id={item.id}
+                    categoryTypeId={item.categoryTypeId}
+                  />
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+        {pageStatus === LOAD_STATUSES.FAILURE && (
+          <div className={css.error}>Ошибка, попробуйте позже</div>
+        )}
       </div>
     );
 };

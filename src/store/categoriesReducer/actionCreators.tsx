@@ -14,10 +14,10 @@ export const setCategoriesFailure = () => ({
   type: CATEGORIES_ACTIONS.SET_CATEGORIES_FAILURE,
 });
 
-export const fetchCategoryItems = () => async (dispatch: any) => {
+export const fetchCategoryItems = (params:string) => async (dispatch: any) => {
   dispatch(setCategoryItems());
   try {
-    const payload = await Api.prototype.getCategories();
+    const payload = await Api.prototype.getCategories(params);
     dispatch(setCategoriesSuccess(payload.categories));
   } catch (error) {
     dispatch(setCategoriesFailure());

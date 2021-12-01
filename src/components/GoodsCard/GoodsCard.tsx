@@ -1,15 +1,9 @@
 import { Card } from "antd";
 import classNames from "classnames";
 import css from "./styles.module.css";
+import { GoodsCardType } from "../../store/goodsReducer";
 
-export interface GoodsCardType {
-  id: number;
-  categoryTypeId: string;
-  label: string;
-  price: number;
-  img: string;
-  content?: string;
-}
+
 
 export const GoodsCard: React.FC<GoodsCardType> = (props) => {
   const { label, img, price} = props;
