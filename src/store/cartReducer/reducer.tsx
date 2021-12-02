@@ -31,28 +31,6 @@ export const cartReducer = (
         ...store,
         loadStatus: LOAD_STATUSES.FAILURE,
       };
-    case CART_ACTIONS.PUT_IN_CART:
-      const { goodsInCart } = action as {
-        type: CART_ACTIONS.PUT_IN_CART;
-        goodsInCart: GoodsCardType;
-      };
-      const inCart = store.cart.concat([goodsInCart]);
-      return {
-        ...store,
-        cart: inCart,
-      };
-    case CART_ACTIONS.DEL_FROM_CART:
-      const { goodsFromCart } = action as {
-        type: CART_ACTIONS.DEL_FROM_CART;
-        goodsFromCart: GoodsCardType;
-      };
-      const fromCart = store.cart.filter(
-        (item) => item.id !== goodsFromCart.id
-      );
-      return {
-        ...store,
-        cart: fromCart,
-      };
     default:
       return store;
   }

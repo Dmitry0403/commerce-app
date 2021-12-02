@@ -16,16 +16,6 @@ export const setCartFailure = () => ({
   type: CART_ACTIONS.SET_CART_FAILURE,
 });
 
-export const putInCart = (goodsInCart: GoodsCardType) => ({
-  type: CART_ACTIONS.PUT_IN_CART,
-  goodsInCart,
-});
-
-export const delFromCart = (goodsFromCart: GoodsCardType) => ({
-  type: CART_ACTIONS.DEL_FROM_CART,
-  goodsFromCart,
-});
-
 export const fetchCart = () => async (dispatch: any) => {
   dispatch(setCart());
   try {
@@ -38,11 +28,17 @@ export const fetchCart = () => async (dispatch: any) => {
 
 export const changeCart =
   (data: GoodsCardType, status: string) => async (dispatch: any) => {
-    if (status === BUTTON_STATUS.delFromCart) {
-      dispatch(delFromCart(data));
-      Api.prototype.delCart(data);
-    } else {
-      dispatch(putInCart(data));
-      Api.prototype.postCart(data);
+    let method = "";
+    status === BUTTON_STATUS.delFromCart
+      ? (method = "DELETE")
+      : (method = "PUT");
+    try {
+      dispatch(setCart());
+      const resp = await Api.prototype.changeCart(data, method);
+      if (resp.ok) {
+        dispatch(fetchCart());
+      }
+    } catch (err) {
+      dispatch(setCartFailure());
     }
   };

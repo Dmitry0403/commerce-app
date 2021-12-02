@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "antd";
-import { getCart } from "../../store/cartReducer/selectors";
+import { getCart, getCartLoadStatus } from "../../store/cartReducer/selectors";
 import { cartActions } from "../../store/cartReducer";
 import {
   getGoods,
@@ -37,6 +37,7 @@ export const GoodsPage: React.FC = () => {
   const pageStatus = useSelector(getGoodsLoadStatus);
   const cart = useSelector(getCart);
   let buttonStatus = BUTTON_STATUS.putInCart;
+  const cartLoadStatus = useSelector(getCartLoadStatus);
 
   if (cart.find((item) => item.id === dataGoodsPage.id)) {
     buttonStatus = BUTTON_STATUS.delFromCart;
@@ -63,10 +64,11 @@ export const GoodsPage: React.FC = () => {
               <div className={css.content}>{dataGoodsPage.description}</div>
               <div className={css.price}>{dataGoodsPage.price} руб.</div>
               <Button
+                disabled={cartLoadStatus === LOAD_STATUSES.LOADING}
                 className={css.button}
-                onClick={() =>
-                  dispatch(cartActions.changeCart(dataGoodsPage, buttonStatus))
-                }
+                onClick={() => {
+                  dispatch(cartActions.changeCart(dataGoodsPage, buttonStatus));
+                }}
               >
                 {buttonStatus}
               </Button>
