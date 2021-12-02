@@ -7,14 +7,13 @@ import { Menu } from "antd";
 import css from "./styles.module.css";
 import { getLoadStatusMenu } from "../../store/categoriesReducer";
 import { LOAD_STATUSES } from "../../store/constatns";
-import { Loader } from "../Loader";
 
 export const SideMenu: React.FC = () => {
   const dispatch = useDispatch();
   const fetchCategoryItems = menuActions.fetchCategoryItems;
   const loadStatusMenu = useSelector(getLoadStatusMenu);
   const sideMenuItems = useSelector(getSideMenuItems);
-  const params: string = ''
+  const params: string = "";
 
   useEffect(() => {
     dispatch(fetchCategoryItems(params));
@@ -22,7 +21,6 @@ export const SideMenu: React.FC = () => {
 
   return (
     <Menu className={css.sideMenu}>
-      {loadStatusMenu === LOAD_STATUSES.LOADING && <Loader />}
       {loadStatusMenu === LOAD_STATUSES.SUCCESS &&
         sideMenuItems.map((item) => (
           <Menu.Item key={item.id}>

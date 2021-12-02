@@ -17,7 +17,6 @@ import type { CartType } from "../store/cartReducer";
 //   total: number;
 // }
 
-
 export class Api {
   getCategories(params: string): Promise<{ categories: CategoryType[] }> {
     return fetch(`/api/categories?${params}`).then((resp) => {
@@ -27,8 +26,7 @@ export class Api {
     });
   }
 
-
-   getPopularCategories(): Promise<CategoryListType[]> {
+  getPopularCategories(): Promise<CategoryListType[]> {
     return fetch("/api/popular_categories").then((resp) => {
       if (resp.ok) {
         return resp.json();
@@ -54,11 +52,10 @@ export class Api {
       .then((resp: CartType) => resp.carts);
   }
 
-  postCart(data: GoodsCardType) {
-    fetch("/api/cart", { method: "PUT", body: JSON.stringify(data) });
-  }
-
-  delCart(data: GoodsCardType) {
-    fetch("/api/cart", { method: "DELETE", body: JSON.stringify(data) });
+  changeCart(data: GoodsCardType, method: string): Promise<Response> {
+    return fetch("/api/cart", {
+      method: method,
+      body: JSON.stringify(data),
+    });
   }
 }
