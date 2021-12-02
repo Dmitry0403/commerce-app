@@ -32,8 +32,13 @@ export const changeCart =
     status === BUTTON_STATUS.delFromCart
       ? (method = "DELETE")
       : (method = "PUT");
-    const resp = await Api.prototype.changeCart(data, method);
-    if (resp.ok) {
-      dispatch(fetchCart());
+    try {
+      dispatch(setCart());
+      const resp = await Api.prototype.changeCart(data, method);
+      if (resp.ok) {
+        dispatch(fetchCart());
+      }
+    } catch (err) {
+      dispatch(setCartFailure());
     }
   };
