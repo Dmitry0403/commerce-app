@@ -125,7 +125,6 @@ createServer({
 
           return schema.carts.findOrCreateBy(prodcut);
         } catch (err) {
-          console.log(err);
           return new Response(500);
         }
       },
