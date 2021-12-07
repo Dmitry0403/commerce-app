@@ -44,7 +44,7 @@ export const GoodsTablePage = () => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [sortBy, setSortBy] = useState("");
-  const [sortDirection, setSortDirection] = useState("asc");
+  const [sortDirection, setSortDirection] = useState("");
 
   const columns = [
     {
@@ -56,7 +56,8 @@ export const GoodsTablePage = () => {
       title: "Товар",
       dataIndex: "label",
       width: 150,
-      onHeaderCell: (record: any) => {
+      sorter: true,
+      onHeaderCell: () => {
         return {
           onClick: () => {
             setSortBy("label");
@@ -71,7 +72,8 @@ export const GoodsTablePage = () => {
       title: "Цена",
       dataIndex: "price",
       width: 150,
-      onHeaderCell: (record: any) => {
+      sorter: true,
+      onHeaderCell: () => {
         return {
           onClick: () => {
             setSortBy("price");
@@ -115,6 +117,7 @@ export const GoodsTablePage = () => {
   // const filterDebounced = debounce(getDataFilter, 1500);
 
   useEffect(() => {
+  
     setTimeout(() => {
       const globalParams: ParamsType = {
         limit,
@@ -129,7 +132,7 @@ export const GoodsTablePage = () => {
       const queryParams = getParams(globalParams);
       const searchParams = new URLSearchParams(queryParams).toString();
       dispatch(goodsAction.fetchGoods(searchParams));
-    }, 1500);
+    }, 1500)
   }, [
     dispatch,
     limit,
@@ -146,8 +149,8 @@ export const GoodsTablePage = () => {
   const totalItems: number = useSelector(getTotalGoods);
   const categoriesItems: CategoryType[] = useSelector(getSideMenuItems);
   const pageStatus = useSelector(getGoodsLoadStatus);
-
   const maks = { 0: "0", 100: "100х10" };
+ 
   return (
     <div className={css.tablePage}>
       <div className={css.filters}>
@@ -199,7 +202,7 @@ export const GoodsTablePage = () => {
           />
         </div>
       </div>
-      <div>
+      <div className={css.table}>
         {pageStatus === LOAD_STATUSES.LOADING && <Loader />}
         {pageStatus === LOAD_STATUSES.SUCCESS && (
           <div>

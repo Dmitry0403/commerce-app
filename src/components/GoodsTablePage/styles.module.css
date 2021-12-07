@@ -1,6 +1,11 @@
 .tablePage {
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
+}
+
+.filters {
+  width: 40vw;
+  padding: 50px;
 }
 
 .filtersTitle {
@@ -14,4 +19,9 @@
 
 .filterItem {
   margin-bottom: 20px;
+}
+
+.table{
+  width: 60vw;
+  padding: 50px;
 }
