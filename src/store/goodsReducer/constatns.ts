@@ -13,6 +13,7 @@ export interface GoodsCardType {
   price: string;
   img: string;
   description?: string;
+  date?: string;
 }
 
 export interface GoodsType {

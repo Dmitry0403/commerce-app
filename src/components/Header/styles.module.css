@@ -17,6 +17,11 @@
   font-size: 25px;
 }
 
+:global(.anticon-shopping) {
+  color: black;
+  font-size: 25px;
+}
+
 :global(.ant-input-search
     > .ant-input-group
     > .ant-input-group-addon:last-child

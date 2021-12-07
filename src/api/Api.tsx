@@ -1,21 +1,7 @@
 import type { CategoryType } from "../store/categoriesReducer";
-import { CategoryListType } from "../components/CategoryList";
+import type { CategoryListType } from "../components/CategoryList";
 import type { GoodsType, GoodsCardType } from "../store/goodsReducer";
 import type { CartType } from "../store/cartReducer";
-
-// interface GoodsCardTypeFromBack {
-//   id: string;
-//   categoryTypeId: string;
-//   label: string;
-//   price: string;
-//   img: string;
-//   description: string;
-// }
-
-// interface GoodsTypeFromBack {
-//   items: GoodsCardTypeFromBack[];
-//   total: number;
-// }
 
 export class Api {
   getCategories(params: string): Promise<{ categories: CategoryType[] }> {

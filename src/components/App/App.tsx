@@ -6,12 +6,14 @@ import { StartPage } from "../StartPage";
 import { GoodsPage } from "../GoodsPage";
 import { CategoryPage } from "../CategoryPage";
 import { CartPage } from "../CartPage";
+import { GoodsTablePage } from "../GoodsTablePage";
 
 export const App = () => {
   return (
     <div>
       <Header />
       <Routes>
+        <Route path="/table" element={<GoodsTablePage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/product/:id" element={<GoodsPage />} />
         <Route path="/category/:typeId" element={<CategoryPage />} />
