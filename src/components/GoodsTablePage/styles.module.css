@@ -1,0 +1,17 @@
+.tablePage {
+  display: flex;
+  justify-content: space-around;
+}
+
+.filtersTitle {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.titleItem {
+  font-size: 18px;
+}
+
+.filterItem {
+  margin-bottom: 20px;
+}

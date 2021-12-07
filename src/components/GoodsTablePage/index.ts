@@ -1,0 +1,1 @@
+export { GoodsTablePage } from "./GoodsTablePage"

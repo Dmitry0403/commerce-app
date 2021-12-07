@@ -1,23 +1,22 @@
 import { Layout, Input, Badge } from "antd";
-import { ShoppingCartOutlined } from "@ant-design/icons";
+import { ShoppingCartOutlined, ShoppingOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import css from "./styles.module.css";
 import { useEffect } from "react";
 import { cartActions, getCart } from "../../store/cartReducer";
 import { useDispatch, useSelector } from "react-redux";
 
-
 export const Header: React.FC = () => {
   const { Header } = Layout;
   const { Search } = Input;
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  useEffect(() =>{
-    dispatch(cartActions.fetchCart())
-  },[dispatch])
-  
-  const cart = useSelector(getCart)
-  const amountCart = cart.length
+  useEffect(() => {
+    dispatch(cartActions.fetchCart());
+  }, [dispatch]);
+
+  const cart = useSelector(getCart);
+  const amountCart = cart.length;
 
   return (
     <Header className={css.headerStyle}>
@@ -25,6 +24,10 @@ export const Header: React.FC = () => {
         <div className={css.logos} />
       </Link>
       <Search placeholder="введите название товара" style={{ width: 500 }} />
+      <Link to="/table">
+        {" "}
+        <ShoppingOutlined />
+      </Link>
       <Link to="/cart">
         <Badge count={amountCart}>
           <ShoppingCartOutlined />
