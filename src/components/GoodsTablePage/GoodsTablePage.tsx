@@ -45,6 +45,8 @@ export const GoodsTablePage = () => {
   const [maxPrice, setMaxPrice] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [sortDirection, setSortDirection] = useState("");
+  const [page, setPage] = useState(3);
+  const [pageSize, setPageSize] = useState(10);
 
   const columns = [
     {
@@ -117,7 +119,6 @@ export const GoodsTablePage = () => {
   // const filterDebounced = debounce(getDataFilter, 1500);
 
   useEffect(() => {
-  
     setTimeout(() => {
       const globalParams: ParamsType = {
         limit,
@@ -132,7 +133,7 @@ export const GoodsTablePage = () => {
       const queryParams = getParams(globalParams);
       const searchParams = new URLSearchParams(queryParams).toString();
       dispatch(goodsAction.fetchGoods(searchParams));
-    }, 1500)
+    }, 1500);
   }, [
     dispatch,
     limit,
@@ -150,7 +151,7 @@ export const GoodsTablePage = () => {
   const categoriesItems: CategoryType[] = useSelector(getSideMenuItems);
   const pageStatus = useSelector(getGoodsLoadStatus);
   const maks = { 0: "0", 100: "100х10" };
- 
+
   return (
     <div className={css.tablePage}>
       <div className={css.filters}>
@@ -222,12 +223,15 @@ export const GoodsTablePage = () => {
             <Pagination
               onChange={(page: number, pageSize: number | undefined) => {
                 setLimit(String(pageSize));
+                setPage(page);
                 if (pageSize) {
                   setOffset(String((page - 1) * pageSize));
+                  setPageSize(pageSize);
                 }
               }}
-              defaultCurrent={5}
               total={totalItems}
+              current={page}
+              pageSize={pageSize}
             />
           </div>
         )}
