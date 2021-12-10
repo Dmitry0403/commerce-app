@@ -14,8 +14,8 @@ import { CategoryType, getSideMenuItems } from "../../store/categoriesReducer";
 import { useNavigate } from "react-router";
 import { Loader } from "../Loader";
 import { LOAD_STATUSES } from "../../store/constatns";
-import { GoodsCardType } from "../../store/goodsReducer"
-
+import { GoodsCardType } from "../../store/goodsReducer";
+import { LINKS } from "../App";
 
 interface FiltersType {
   limit: string;
@@ -199,7 +199,7 @@ export const GoodsTablePage = () => {
               onRow={(record) => {
                 return {
                   onClick: () => {
-                    navigate(`/product/${record.id}`);
+                    navigate(LINKS.product + "/" + record.id);
                   },
                 };
               }}

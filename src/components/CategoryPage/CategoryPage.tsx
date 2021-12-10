@@ -11,6 +11,7 @@ import {
 } from "../../store/goodsReducer";
 import { Loader } from "../Loader";
 import { LOAD_STATUSES } from "../../store/constatns";
+import { LINKS } from "../App";
 
 export const CategoryPage: React.FC = () => {
   const { typeId } = useParams();
@@ -48,7 +49,7 @@ export const CategoryPage: React.FC = () => {
             <div className={css.title}>{dataCategory[0].label}</div>
             <div className={css.goodsList}>
               {dataGoods.map((item) => (
-                <Link to={`/product/${item.id}`} key={item.id}>
+                <Link to={LINKS.product + "/" + item.id} key={item.id}>
                   <GoodsCard
                     label={item.label}
                     img={item.img}

@@ -5,6 +5,7 @@ import css from "./styles.module.css";
 import { useEffect } from "react";
 import { cartActions, getCart } from "../../store/cartReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { LINKS } from "../App";
 
 export const Header: React.FC = () => {
   const { Header } = Layout;
@@ -20,15 +21,15 @@ export const Header: React.FC = () => {
 
   return (
     <Header className={css.headerStyle}>
-      <Link to="/">
+      <Link to={LINKS.start}>
         <div className={css.logos} />
       </Link>
       <Search placeholder="введите название товара" style={{ width: 500 }} />
-      <Link to="/table">
+      <Link to={LINKS.table}>
         {" "}
         <ShoppingOutlined />
       </Link>
-      <Link to="/cart">
+      <Link to={LINKS.cart}>
         <Badge count={amountCart}>
           <ShoppingCartOutlined />
         </Badge>

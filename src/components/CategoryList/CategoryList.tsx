@@ -4,6 +4,7 @@ import { GoodsCardType } from "../../store/goodsReducer";
 import { CategoryType } from "../../store/categoriesReducer";
 import { Link } from "react-router-dom";
 import css from "./styles.module.css";
+import { LINKS } from "../App";
 
 export interface CategoryListType {
   category: CategoryType;
@@ -14,12 +15,12 @@ export const CategoryList: React.FC<CategoryListType> = (props) => {
   const { category, items } = props;
   return (
     <div className={css.categoryList}>
-      <Link to={`/category/${category.type}`}>
+      <Link to={LINKS.category + "/" + category.type}>
         <div className={css.title}>{category.label}</div>
       </Link>
       <div className={css.goodsList}>
         {items.map((item) => (
-          <Link to={`/product/${item.id}`} key={item.id}>
+          <Link to={LINKS.product + "/" + item.id} key={item.id}>
             <GoodsCard
               label={item.label}
               img={item.img}
