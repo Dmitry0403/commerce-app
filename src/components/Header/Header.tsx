@@ -7,7 +7,12 @@ import { useEffect, useState } from "react";
 import { cartActions, getCart } from "../../store/cartReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { LINKS } from "../App";
-import { goodsAction, getGoodsSearchHeader } from "../../store/goodsReducer";
+import {
+  goodsAction,
+  getGoodsSearchHeader,
+  getGoodsLoadStatus,
+} from "../../store/goodsReducer";
+import { LOAD_STATUSES } from "../../store/constatns";
 
 export const Header: React.FC = () => {
   const { Header } = Layout;
@@ -29,10 +34,15 @@ export const Header: React.FC = () => {
   const selectGoodsDebounced = debounce(selectGoods, 1500);
 
   const dataSearchHeader = useSelector(getGoodsSearchHeader);
+  const loadStatus = useSelector(getGoodsLoadStatus);
 
   let options = [];
 
-  if (dataSearchHeader.length === 0 && value) {
+  if (
+    dataSearchHeader.length === 0 &&
+    value &&
+    loadStatus === LOAD_STATUSES.SUCCESS
+  ) {
     options = [{ value: "Ничего не найдено, попробуйте изменить запрос" }];
   } else {
     options = dataSearchHeader.map((item) => {
