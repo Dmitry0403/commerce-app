@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import css from "./styles.module.css";
-import { Input, notification } from "antd";
+import { Input,  notification } from "antd";
 import { Link } from "react-router-dom";
 import { LINKS } from "../App";
 import { useNavigate } from "react-router";

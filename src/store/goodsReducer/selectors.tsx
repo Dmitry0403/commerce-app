@@ -9,3 +9,6 @@ export const getTotalGoods = (state: RootState): number =>
 
 export const getGoodsLoadStatus = (state: RootState) =>
   state.goodsData.loadStatus;
+
+export const getGoodsSearchHeader = (state: RootState): GoodsCardType[] =>
+  state.goodsData.itemsSearchHeader;

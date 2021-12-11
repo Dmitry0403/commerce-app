@@ -14,7 +14,7 @@ import { CategoryType, getSideMenuItems } from "../../store/categoriesReducer";
 import { useNavigate } from "react-router";
 import { Loader } from "../Loader";
 import { LOAD_STATUSES } from "../../store/constatns";
-import { GoodsCardType } from "../../store/goodsReducer";
+import type { GoodsCardType } from "../../store/goodsReducer";
 import { LINKS } from "../App";
 
 interface FiltersType {
@@ -31,7 +31,7 @@ interface FiltersType {
 export const GoodsTablePage = () => {
   const [page, setPage] = useState(3);
   const [pageSize, setPageSize] = useState(10);
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<FiltersType>({
     limit: "",
     offset: "",
     text: "",

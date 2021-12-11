@@ -1,16 +1,19 @@
-import { Layout, Input, Badge } from "antd";
+import { Layout, Badge, AutoComplete } from "antd";
+import { debounce } from "lodash";
 import { ShoppingCartOutlined, ShoppingOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import css from "./styles.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { cartActions, getCart } from "../../store/cartReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { LINKS } from "../App";
+import { goodsAction, getGoodsSearchHeader } from "../../store/goodsReducer";
 
 export const Header: React.FC = () => {
   const { Header } = Layout;
-  const { Search } = Input;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [value, setValue] = useState("");
 
   useEffect(() => {
     dispatch(cartActions.fetchCart());
@@ -19,12 +22,41 @@ export const Header: React.FC = () => {
   const cart = useSelector(getCart);
   const amountCart = cart.length;
 
+  const selectGoods = (v: string) => {
+    setValue(v);
+    dispatch(goodsAction.fetchGoodsSearchHeader(`text=${v}`));
+  };
+  const selectGoodsDebounced = debounce(selectGoods, 1500);
+
+  const dataSearchHeader = useSelector(getGoodsSearchHeader);
+
+  let options = [];
+
+  if (dataSearchHeader.length === 0 && value) {
+    options = [{ value: "Ничего не найдено, попробуйте изменить запрос" }];
+  } else {
+    options = dataSearchHeader.map((item) => {
+      return { ...item, value: item.label, key: item.id };
+    });
+  }
+
   return (
     <Header className={css.headerStyle}>
       <Link to={LINKS.start}>
         <div className={css.logos} />
       </Link>
-      <Search placeholder="введите название товара" style={{ width: 500 }} />
+      <AutoComplete
+        options={options}
+        placeholder="введите название товара"
+        style={{ width: 500 }}
+        allowClear={true}
+        onChange={(value) => selectGoodsDebounced(value)}
+        onSelect={(_, option) =>
+          setTimeout(() => {
+            navigate(LINKS.product + "/" + option.id);
+          }, 900)
+        }
+      />
       <Link to={LINKS.table}>
         {" "}
         <ShoppingOutlined />

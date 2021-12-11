@@ -12,6 +12,11 @@ export const setGoodsSuccess = (payload: GoodsType[]) => ({
   payload,
 });
 
+export const setGoodsSuccessSearchHeader = (payloadHeader: GoodsType[]) => ({
+  type: GOODS_ACTIONS.SET_GOODS_SUCCESS_SEARCHHEADER,
+  payloadHeader,
+});
+
 export const setGoodsFailure = () => ({
   type: GOODS_ACTIONS.SET_GOODS_FAILURE,
 });
@@ -21,6 +26,15 @@ export const fetchGoods = (params: string) => async (dispatch: any) => {
   try {
     const payload = await Api.prototype.getGoods(params);
     dispatch(setGoodsSuccess(payload));
+  } catch (error) {
+    dispatch(setGoodsFailure());
+  }
+};
+
+export const fetchGoodsSearchHeader = (params: string) => async (dispatch: any) => {
+  try {
+    const payload = await Api.prototype.getGoods(params);
+    dispatch(setGoodsSuccessSearchHeader(payload));
   } catch (error) {
     dispatch(setGoodsFailure());
   }
