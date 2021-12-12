@@ -27,9 +27,11 @@ export const Header: React.FC = () => {
   const cart = useSelector(getCart);
   const amountCart = cart.length;
 
-  const selectGoods = (v: string) => {
-    setValue(v);
-    dispatch(goodsAction.fetchGoodsSearchHeader(`text=${v}`));
+  const selectGoods = (value: string) => {
+    setValue(value);
+    if (value) {
+      dispatch(goodsAction.fetchGoodsSearchHeader(`text=${value.trim()}`));
+    }
   };
   const selectGoodsDebounced = debounce(selectGoods, 1500);
 
@@ -46,7 +48,7 @@ export const Header: React.FC = () => {
     options = [{ value: "Ничего не найдено, попробуйте изменить запрос" }];
   } else {
     options = dataSearchHeader.map((item) => {
-      return { ...item, value: item.label, key: item.id };
+      return { value: item.label, key: item.id };
     });
   }
 
@@ -63,7 +65,7 @@ export const Header: React.FC = () => {
         onChange={(value) => selectGoodsDebounced(value)}
         onSelect={(_, option) =>
           setTimeout(() => {
-            navigate(LINKS.product + "/" + option.id);
+            navigate(LINKS.product + "/" + option.key);
           }, 900)
         }
       />
