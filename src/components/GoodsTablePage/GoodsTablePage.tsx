@@ -4,12 +4,7 @@ import { debounce } from "lodash";
 import { Input, Select, Slider } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  goodsAction,
-  getGoods,
-  getTotalGoods,
-  getGoodsLoadStatus,
-} from "../../store/goodsReducer";
+import { goodsAction, getGoodsSlice } from "../../store/goodsReducer";
 import { CategoryType, getSideMenuItems } from "../../store/categoriesReducer";
 import { useNavigate } from "react-router";
 import { Loader } from "../Loader";
@@ -42,6 +37,14 @@ export const GoodsTablePage = () => {
     sortDirection: "",
   });
 
+  const setSort = (sortBy: string) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      sortBy,
+      sortDirection: prevFilters.sortDirection === "asc" ? "desk" : "asc",
+    }));
+  };
+
   const columns = [
     {
       title: "Категория",
@@ -56,17 +59,7 @@ export const GoodsTablePage = () => {
       onHeaderCell: () => {
         return {
           onClick: () => {
-            filters.sortDirection === "asc"
-              ? setFilters({
-                  ...filters,
-                  sortBy: "label",
-                  sortDirection: "desk",
-                })
-              : setFilters({
-                  ...filters,
-                  sortBy: "label",
-                  sortDirection: "asc",
-                });
+            setSort("label");
           },
         };
       },
@@ -79,17 +72,7 @@ export const GoodsTablePage = () => {
       onHeaderCell: () => {
         return {
           onClick: () => {
-            filters.sortDirection === "asc"
-              ? setFilters({
-                  ...filters,
-                  sortBy: "price",
-                  sortDirection: "desk",
-                })
-              : setFilters({
-                  ...filters,
-                  sortBy: "price",
-                  sortDirection: "asc",
-                });
+            setSort("price");
           },
         };
       },
@@ -121,10 +104,10 @@ export const GoodsTablePage = () => {
     memoizedFilter(filters);
   }, [memoizedFilter, filters]);
 
-  const dataGoods: GoodsCardType[] = useSelector(getGoods);
-  const totalItems: number = useSelector(getTotalGoods);
+  const dataGoods: GoodsCardType[] = useSelector(getGoodsSlice).items;
+  const totalItems: number = useSelector(getGoodsSlice).total;
   const categoriesItems: CategoryType[] = useSelector(getSideMenuItems);
-  const pageStatus = useSelector(getGoodsLoadStatus);
+  const pageStatus = useSelector(getGoodsSlice).loadStatus;
   const maks = { 0: "0", 100: "100х10" };
 
   return (

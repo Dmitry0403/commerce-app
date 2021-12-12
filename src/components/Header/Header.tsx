@@ -3,15 +3,11 @@ import { debounce } from "lodash";
 import { ShoppingCartOutlined, ShoppingOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import css from "./styles.module.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { cartActions, getCart } from "../../store/cartReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { LINKS } from "../App";
-import {
-  goodsAction,
-  getGoodsSearchHeader,
-  getGoodsLoadStatus,
-} from "../../store/goodsReducer";
+import { goodsAction, getGoodsSlice } from "../../store/goodsReducer";
 import { LOAD_STATUSES } from "../../store/constatns";
 
 export const Header: React.FC = () => {
@@ -33,10 +29,10 @@ export const Header: React.FC = () => {
       dispatch(goodsAction.fetchGoodsSearchHeader(`text=${value.trim()}`));
     }
   };
-  const selectGoodsDebounced = debounce(selectGoods, 1500);
+  const selectGoodsDebounced = useCallback(debounce(selectGoods, 1500), []);
 
-  const dataSearchHeader = useSelector(getGoodsSearchHeader);
-  const loadStatus = useSelector(getGoodsLoadStatus);
+  const dataSearchHeader = useSelector(getGoodsSlice).itemsSearchHeader;
+  const loadStatus = useSelector(getGoodsSlice).loadStatus;
 
   let options = [];
 
@@ -61,7 +57,7 @@ export const Header: React.FC = () => {
         options={options}
         placeholder="введите название товара"
         style={{ width: 500 }}
-        allowClear={true}
+        allowClear
         onChange={(value) => selectGoodsDebounced(value)}
         onSelect={(_, option) =>
           setTimeout(() => {

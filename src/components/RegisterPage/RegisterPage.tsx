@@ -17,7 +17,7 @@ interface StateType {
 }
 
 interface RegisterProps {
-  changeStatus: () => void;
+  changeLoginStatus: () => void;
 }
 
 export const RegisterPage: React.FC<RegisterProps> = (props) => {
@@ -100,7 +100,7 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
     });
 
     setTimeout(() => {
-      props.changeStatus();
+      props.changeLoginStatus();
     }, 2000);
   };
 
@@ -112,7 +112,7 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
   return (
     <div className={css.wrapper}>
       <h1>Регистрация</h1>
-      <form className={css.userForm} onSubmit={(e) => handleSubmit(e)}>
+      <form className={css.userForm} onSubmit={handleSubmit}>
         <div>
           <label>Введите логин:</label>
           <div>
@@ -121,7 +121,7 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
               value={login}
               name="login"
               className={errorLogin ? css.error : css.userName}
-              onChange={(e) => handleChange(e)}
+              onChange={handleChange}
               placeholder={errorLogin}
             />
           </div>
@@ -134,7 +134,7 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
               value={password}
               name="password"
               className={errorPass ? css.error : css.userPass}
-              onChange={(e) => handleChange(e)}
+              onChange={handleChange}
               placeholder={errorPass}
             />
           </div>

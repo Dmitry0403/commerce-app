@@ -51,8 +51,8 @@ export const App = () => {
   } else {
     return (
       <Routes>
-        <Route path={LINKS.logo} element={<LoginPage changeStatus={changeLogin}/>} />
-        <Route path={LINKS.reg} element={<RegisterPage changeStatus={changeLogin}/>} />
+        <Route path={LINKS.logo} element={<LoginPage changeLoginStatus={changeLogin}/>} />
+        <Route path={LINKS.reg} element={<RegisterPage changeLoginStatus={changeLogin}/>} />
         <Route path="*" element={<Navigate to={LINKS.logo} />} />
       </Routes>
     );

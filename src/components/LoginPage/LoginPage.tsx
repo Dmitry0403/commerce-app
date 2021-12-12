@@ -15,7 +15,7 @@ interface StateType {
 }
 
 interface LoginProps {
-  changeStatus: () => void;
+  changeLoginStatus: () => void;
 }
 
 export const LoginPage: React.FC<LoginProps> = (props) => {
@@ -62,7 +62,7 @@ export const LoginPage: React.FC<LoginProps> = (props) => {
     });
 
     setTimeout(() => {
-      props.changeStatus();
+      props.changeLoginStatus();
     }, 2000);
   };
 
@@ -74,7 +74,7 @@ export const LoginPage: React.FC<LoginProps> = (props) => {
   return (
     <div className={css.wrapper}>
       <h1>Введите логин и пароль</h1>
-      <form className={css.userForm} onSubmit={(e) => handleSubmit(e)}>
+      <form className={css.userForm} onSubmit={handleSubmit}>
         <div>
           <label>Ваш логин:</label>
           <div>
@@ -83,7 +83,7 @@ export const LoginPage: React.FC<LoginProps> = (props) => {
               value={login}
               name="login"
               className={errorLogin ? css.error : css.userName}
-              onChange={(e) => handleChange(e)}
+              onChange={handleChange}
               placeholder={errorLogin}
             />
           </div>
@@ -96,7 +96,7 @@ export const LoginPage: React.FC<LoginProps> = (props) => {
               value={password}
               name="password"
               className={css.userPass}
-              onChange={(e) => handleChange(e)}
+              onChange={handleChange}
               placeholder={errorPass}
             />
           </div>

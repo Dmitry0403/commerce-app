@@ -4,11 +4,7 @@ import { useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { GoodsCard } from "../GoodsCard";
 import { getSideMenuItems } from "../../store/categoriesReducer";
-import {
-  getGoods,
-  getGoodsLoadStatus,
-  goodsAction,
-} from "../../store/goodsReducer";
+import { getGoodsSlice, goodsAction } from "../../store/goodsReducer";
 import { Loader } from "../Loader";
 import { LOAD_STATUSES } from "../../store/constatns";
 import { LINKS } from "../App";
@@ -30,8 +26,8 @@ export const CategoryPage: React.FC = () => {
   }, [dispatch, typeId]);
 
   const dataCategory = useSelector(getSideMenuItems);
-  const dataGoods = useSelector(getGoods);
-  const pageStatus = useSelector(getGoodsLoadStatus);
+  const dataGoods = useSelector(getGoodsSlice).items;
+  const pageStatus = useSelector(getGoodsSlice).loadStatus;
 
   if (!dataCategory || !dataGoods) {
     return (
