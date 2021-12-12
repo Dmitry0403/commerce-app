@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { GoodsCard } from "../GoodsCard";
 import { getCart } from "../../store/cartReducer";
+import { LINKS } from "../App";
 
 export const CartPage: React.FC = () => {
   const dataCart = useSelector(getCart);
@@ -15,7 +16,7 @@ export const CartPage: React.FC = () => {
       <div className={css.title}>{titleCart}</div>
       <div className={css.goodsList}>
         {dataCart.map((item) => (
-          <Link to={`/product/${item.id}`} key={item.id}>
+          <Link to={LINKS.product + "/" + item.id} key={item.id}>
             <GoodsCard
               label={item.label}
               img={item.img}

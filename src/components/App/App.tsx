@@ -7,20 +7,54 @@ import { GoodsPage } from "../GoodsPage";
 import { CategoryPage } from "../CategoryPage";
 import { CartPage } from "../CartPage";
 import { GoodsTablePage } from "../GoodsTablePage";
+import { LoginPage } from "../LoginPage";
+import { RegisterPage } from "../RegisterPage";
+import { useState } from "react";
+
+export enum LINKS {
+  start = "/",
+  product = "/product",
+  category = "/category",
+  logo = "/login",
+  reg = "/reg",
+  cart = "/cart",
+  table = "/table",
+  id = "/:id",
+  typeId = "/:typeId",
+}
 
 export const App = () => {
-  return (
-    <div>
-      <Header />
+  const [isLogin, setIsLogin] = useState(false);
+
+  const changeLogin = () => {
+    setIsLogin(true);
+  };
+
+  if (isLogin) {
+    return (
+      <div>
+        <Header />
+        <Routes>
+          <Route path={LINKS.table} element={<GoodsTablePage />} />
+          <Route path={LINKS.cart} element={<CartPage />} />
+          <Route path={LINKS.product + LINKS.id} element={<GoodsPage />} />
+          <Route
+            path={LINKS.category + LINKS.typeId}
+            element={<CategoryPage />}
+          />
+          <Route path={LINKS.start} element={<StartPage />} />
+          <Route path="*" element={<Navigate to={LINKS.start} />} />
+        </Routes>
+        <Footer />
+      </div>
+    );
+  } else {
+    return (
       <Routes>
-        <Route path="/table" element={<GoodsTablePage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/product/:id" element={<GoodsPage />} />
-        <Route path="/category/:typeId" element={<CategoryPage />} />
-        <Route path="/" element={<StartPage />} />
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path={LINKS.logo} element={<LoginPage changeLoginStatus={changeLogin}/>} />
+        <Route path={LINKS.reg} element={<RegisterPage changeLoginStatus={changeLogin}/>} />
+        <Route path="*" element={<Navigate to={LINKS.logo} />} />
       </Routes>
-      <Footer />
-    </div>
-  );
+    );
+  }
 };

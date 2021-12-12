@@ -1,15 +1,20 @@
-import { Layout, Input, Badge } from "antd";
+import { Layout, Badge, AutoComplete } from "antd";
+import { debounce } from "lodash";
 import { ShoppingCartOutlined, ShoppingOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import css from "./styles.module.css";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { cartActions, getCart } from "../../store/cartReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { LINKS } from "../App";
+import { goodsAction, getGoodsSlice } from "../../store/goodsReducer";
+import { LOAD_STATUSES } from "../../store/constatns";
 
 export const Header: React.FC = () => {
   const { Header } = Layout;
-  const { Search } = Input;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [value, setValue] = useState("");
 
   useEffect(() => {
     dispatch(cartActions.fetchCart());
@@ -18,17 +23,53 @@ export const Header: React.FC = () => {
   const cart = useSelector(getCart);
   const amountCart = cart.length;
 
+  const selectGoods = (value: string) => {
+    setValue(value);
+    if (value) {
+      dispatch(goodsAction.fetchGoodsSearchHeader(`text=${value.trim()}`));
+    }
+  };
+  const selectGoodsDebounced = useCallback(debounce(selectGoods, 1500), []);
+
+  const dataSearchHeader = useSelector(getGoodsSlice).itemsSearchHeader;
+  const loadStatus = useSelector(getGoodsSlice).loadStatus;
+
+  let options = [];
+
+  if (
+    dataSearchHeader.length === 0 &&
+    value &&
+    loadStatus === LOAD_STATUSES.SUCCESS
+  ) {
+    options = [{ value: "Ничего не найдено, попробуйте изменить запрос" }];
+  } else {
+    options = dataSearchHeader.map((item) => {
+      return { value: item.label, key: item.id };
+    });
+  }
+
   return (
     <Header className={css.headerStyle}>
-      <Link to="/">
+      <Link to={LINKS.start}>
         <div className={css.logos} />
       </Link>
-      <Search placeholder="введите название товара" style={{ width: 500 }} />
-      <Link to="/table">
+      <AutoComplete
+        options={options}
+        placeholder="введите название товара"
+        style={{ width: 500 }}
+        allowClear
+        onChange={(value) => selectGoodsDebounced(value)}
+        onSelect={(_, option) =>
+          setTimeout(() => {
+            navigate(LINKS.product + "/" + option.key);
+          }, 900)
+        }
+      />
+      <Link to={LINKS.table}>
         {" "}
         <ShoppingOutlined />
       </Link>
-      <Link to="/cart">
+      <Link to={LINKS.cart}>
         <Badge count={amountCart}>
           <ShoppingCartOutlined />
         </Badge>

@@ -1,0 +1,49 @@
+.wrapper {
+  width: 1600px;
+  margin: 0 auto;
+  max-width: 100%;
+  min-height: 100vh;
+  background: rgb(229, 229, 231);
+}
+
+h1 {
+  text-align: center;
+}
+
+label {
+  font-size: 25px;
+}
+
+.userForm {
+  text-align: center;
+}
+
+.userName, .userPass {
+  font-size: 25px;
+  max-width: 380px;
+  margin-bottom: 40px;
+}
+
+
+.button {
+  min-width: 200px;
+  height: 50px;
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: black;
+}
+
+.linkBtn {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.error {
+  font-size: 25px;
+  max-width: 380px;
+  margin-bottom: 40px;
+  border: red solid 3px;
+}

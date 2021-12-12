@@ -5,11 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "antd";
 import { getCart, getCartLoadStatus } from "../../store/cartReducer/selectors";
 import { cartActions } from "../../store/cartReducer";
-import {
-  getGoods,
-  getGoodsLoadStatus,
-  goodsAction,
-} from "../../store/goodsReducer";
+import { getGoodsSlice, goodsAction } from "../../store/goodsReducer";
 import { LOAD_STATUSES } from "../../store/constatns";
 import { Loader } from "../Loader";
 
@@ -33,8 +29,8 @@ export const GoodsPage: React.FC = () => {
     dispatch(goodsAction.fetchGoods(params));
   }, [dispatch, id]);
 
-  const dataGoodsPage = useSelector(getGoods)[0];
-  const pageStatus = useSelector(getGoodsLoadStatus);
+  const dataGoodsPage = useSelector(getGoodsSlice).items[0];
+  const pageStatus = useSelector(getGoodsSlice).loadStatus;
   const cart = useSelector(getCart);
   let buttonStatus = BUTTON_STATUS.putInCart;
   const cartLoadStatus = useSelector(getCartLoadStatus);
