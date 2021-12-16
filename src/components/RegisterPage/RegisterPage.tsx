@@ -1,19 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import css from "./styles.module.css";
-import { Input,  notification } from "antd";
-import { Link } from "react-router-dom";
+import { Input, notification, Switch } from "antd";
 import { LINKS } from "../App";
 import { useNavigate } from "react-router";
+import * as yup from "yup";
+import { useSelector } from "react-redux";
+import { getSideMenuItems } from "../../store/categoriesReducer";
 
 interface UserType {
-  login: string;
+  name: string;
+  surname?: string;
+  email: string;
   password: string;
-}
-
-interface StateType {
-  usersArray: UserType[];
-  values: UserType;
-  errors: UserType;
+  gender?: string;
+  interests: string[];
+  isSubscribe: boolean;
+  secretType: string;
+  secretAnswer: string;
+  bornAt: string;
 }
 
 interface RegisterProps {
@@ -21,134 +25,283 @@ interface RegisterProps {
 }
 
 export const RegisterPage: React.FC<RegisterProps> = (props) => {
-  const [state, setState] = useState<StateType>({
-    usersArray: [],
-    values: { login: "", password: "" },
-    errors: { login: "", password: "" },
+  const navigate = useNavigate();
+  const categories = useSelector(getSideMenuItems);
+  const [confirmPass, setConfirmPass] = useState("");
+  const [user, setUser] = useState<UserType>({
+    name: "",
+    surname: "",
+    email: "",
+    password: "",
+    gender: "",
+    interests: [],
+    isSubscribe: true,
+    secretType: "",
+    secretAnswer: "",
+    bornAt: "",
   });
 
-  const navigate = useNavigate();
+  const [errors, setErrors] = useState<UserType>({
+    name: "",
+    surname: "",
+    email: "",
+    password: "",
+    gender: "",
+    interests: [],
+    isSubscribe: true,
+    secretType: "",
+    secretAnswer: "",
+    bornAt: "",
+  });
 
-  useEffect(() => {
-    if (localStorage.getItem("usersArray")) {
-      const usersArray = JSON.parse(
-        localStorage.getItem("usersArray") as string
-      );
-      setState((prevState) => ({
-        ...prevState,
-        usersArray,
-      }));
-    }
-  }, []);
+  let schema = yup.object().shape({
+    secretType: yup.string(),
+    secretAnswer: yup.string(),
+    bornAt: yup.date().min(1930.01, "не старше 1930 года рождения"),
+    isSubscribe: yup.boolean(),
+    interests: yup.array().min(2, "выберете мин 2 категории"),
+    gender: yup.string(),
+    password: yup
+      .string()
+      .min(6, "минимум 6 символов")
+      .required("обязательное поле"),
+    email: yup.string().email().required("обязательное поле"),
+    surname: yup.string().min(2, "минимум 2 символа"),
+    name: yup
+      .string()
+      .min(2, "минимум 2 символа")
+      .required("обязательное поле"),
+  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
-    setState((prevState) => ({
-      ...state,
-      values: { ...prevState.values, [target.name]: target.value },
-      errors: { ...prevState.errors, [target.name]: "" },
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [target.name]: "",
+    }));
+    setUser((prevUser) => ({
+      ...prevUser,
+      [target.name]: target.value,
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    let {
-      usersArray,
-      values: { login, password },
-    } = state;
-
-    e.preventDefault();
-
-    if (!login.trim()) {
-      setState((prevState) => ({
-        ...state,
-        errors: { ...prevState.errors, login: "введите логин" },
+  const handlerCheckbox = (value: string) => {
+    if (user.interests.find((item) => item === value)) {
+      setUser((prevState) => ({
+        ...prevState,
+        interests: prevState.interests.filter((item) => item !== value),
       }));
-      return;
-    }
-
-    if (!password.trim()) {
-      setState((prevState) => ({
-        ...state,
-        errors: { ...prevState.errors, password: "введите пароль" },
+    } else {
+      setUser((prevState) => ({
+        ...prevState,
+        interests: prevState.interests.concat([value]),
       }));
-      return;
     }
-
-    if (usersArray.find((user: UserType) => user.login === login)) {
-      setState((prevState) => ({
-        ...state,
-        errors: {
-          ...prevState.errors,
-          login: "упс, такой логин уже есть",
-        },
-        values: { ...prevState.values, login: "", password: "" },
-      }));
-      return;
-    }
-
-    usersArray = usersArray.concat([
-      {
-        login,
-        password,
-      },
-    ]);
-    localStorage.setItem("usersArray", JSON.stringify(usersArray));
-
-    notification.open({
-      message: "Вы успешно прошли регистрацию",
-      duration: 1.9,
-    });
-
-    setTimeout(() => {
-      props.changeLoginStatus();
-    }, 2000);
   };
 
-  const {
-    values: { login, password },
-    errors: { login: errorLogin, password: errorPass },
-  } = state;
+  const handlerSwitch = (value: boolean) => {
+    setUser((prevState) => ({
+      ...prevState,
+      isSubscribe: value,
+    }));
+  };
+
+  const handlerSubmit = () => {
+    if (user.password !== confirmPass) {
+      notification.open({
+        message: "Пароли не совпадают",
+        duration: 1.7,
+      });
+      return;
+    }
+
+    if (user.secretType) {
+      if (!user.secretAnswer) {
+        setErrors((prevState) => ({
+          ...prevState,
+          secretAnswer: "введите ответ на секретный вопрос",
+        }));
+        return;
+      }
+    }
+
+    schema
+      .validate(user)
+      .then((value) => {
+        if (value) {
+          notification.open({
+            message: "Вы успешно прошли регистрацию",
+            duration: 1.6,
+          });
+          setTimeout(() => {
+            navigate(LINKS.start);
+            props.changeLoginStatus();
+          }, 1700);
+        } else throw new Error();
+      })
+      .catch((err) => {
+        const errorKey = err.path;
+        const errorMessage = err.errors[0];
+        notification.open({
+          message: "Проверьте корректность заполнения формы",
+          duration: 1.5,
+        });
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [errorKey]: errorMessage,
+        }));
+      });
+  };
 
   return (
     <div className={css.wrapper}>
       <h1>Регистрация</h1>
-      <form className={css.userForm} onSubmit={handleSubmit}>
-        <div>
-          <label>Введите логин:</label>
-          <div>
+
+      <div className={css.userForm}>
+        <section>
+          <div className={css.inputItem}>
+            <label>Имя:</label>
             <Input
               type="text"
-              value={login}
-              name="login"
-              className={errorLogin ? css.error : css.userName}
-              onChange={handleChange}
-              placeholder={errorLogin}
+              value={user.name}
+              name="name"
+              className={errors.name ? css.error : css.userInput}
+              onChange={handlerChange}
             />
+            <div className={css.errorMessage}>{errors.name}</div>
           </div>
-        </div>
-        <div>
-          <label>Введите пароль:</label>
-          <div>
+          <div className={css.inputItem}>
+            <label>Фамилия:</label>
             <Input
+              type="text"
+              value={user.surname}
+              name="surname"
+              className={errors.surname ? css.error : css.userInput}
+              onChange={handlerChange}
+            />
+            <div className={css.errorMessage}>{errors.surname}</div>
+          </div>
+          <div className={css.inputItem}>
+            <label>Почта:</label>
+            <Input
+              type="email"
+              value={user.email}
+              name="email"
+              className={errors.email ? css.error : css.userInput}
+              onChange={handlerChange}
+            />
+            <div className={css.errorMessage}>{errors.email}</div>
+          </div>
+          <div className={css.inputItem}>
+            <label>Пароль:</label>
+            <Input.Password
               type="password"
-              value={password}
+              value={user.password}
               name="password"
-              className={errorPass ? css.error : css.userPass}
-              onChange={handleChange}
-              placeholder={errorPass}
+              className={errors.password ? css.error : css.userInput}
+              onChange={handlerChange}
+            />
+            <div className={css.errorMessage}>{errors.password}</div>
+          </div>
+          <div className={css.inputItem}>
+            <label>Подтвердите пароль:</label>
+            <Input.Password
+              type="password"
+              value={confirmPass}
+              name="confirmPass"
+              className={
+                confirmPass === user.password ? css.userInput : css.error
+              }
+              onChange={(e) => setConfirmPass(e.target.value)}
             />
           </div>
-        </div>
-        <button type="submit" className={css.button}>
+          <div className={css.inputItem}>
+            <label>Пол:</label>
+            <Input
+              type="radio"
+              id="male"
+              value="male"
+              name="gender"
+              onChange={handlerChange}
+            />
+            <label id="male">муж</label>
+            <Input
+              type="radio"
+              id="femail"
+              value="female"
+              name="gender"
+              onChange={handlerChange}
+            />
+            <label id="female">жен</label>
+          </div>
+        </section>
+        <section>
+          <div className={css.inputItem}>
+            <label>Любимые категории:</label>
+            {categories.map((item) => (
+              <div key={item.id}>
+                <Input
+                  type="checkbox"
+                  name="interests"
+                  onClick={() => handlerCheckbox(item.type)}
+                />
+                <label>{item.label}</label>
+              </div>
+            ))}
+            <div className={css.errorMessage}>{errors.interests}</div>
+          </div>
+          <div className={css.inputItem}>
+            <label>Подписка на новости:</label>
+            <Switch
+              size="small"
+              defaultChecked
+              onChange={(checked) => handlerSwitch(checked)}
+            />
+          </div>
+          <div className={css.inputItem}>
+            <label>Дата рождения:</label>
+            <Input
+              type="date"
+              value={user.bornAt}
+              name="bornAt"
+              onChange={handlerChange}
+            />
+            <div className={css.errorMessage}>{errors.bornAt}</div>
+          </div>
+          <div className={css.inputItem}>
+            <label>Секретный вопрос:</label>
+            <Input
+              type="text"
+              value={user.secretType}
+              name="secretType"
+              className={errors.secretType ? css.error : css.userInput}
+              onChange={handlerChange}
+            />
+          </div>
+          {user.secretType && (
+            <div className={css.inputItem}>
+              <label>ответ:</label>
+              <Input
+                type="text"
+                value={user.secretAnswer}
+                name="secretAnswer"
+                className={errors.secretAnswer ? css.error : css.userInput}
+                onChange={handlerChange}
+              />
+              <div className={css.errorMessage}>{errors.secretAnswer}</div>
+            </div>
+          )}
+        </section>
+      </div>
+      <div className={css.linkBtn}>
+        <button className={css.button} onClick={handlerSubmit}>
           Сохранить
         </button>
-      </form>
+      </div>
       <div className={css.linkBtn}>
-        <Link to={LINKS.logo}>
-          <button className={css.button} onClick={() => navigate(LINKS.logo)}>
-            Отмена
-          </button>
-        </Link>
+        <button className={css.button} onClick={() => navigate(LINKS.start)}>
+          Отмена
+        </button>
       </div>
     </div>
   );
