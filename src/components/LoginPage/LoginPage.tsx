@@ -62,6 +62,7 @@ export const LoginPage: React.FC<LoginProps> = (props) => {
     });
 
     setTimeout(() => {
+      navigate(LINKS.start)
       props.changeLoginStatus();
     }, 2000);
   };

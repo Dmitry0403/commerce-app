@@ -45,6 +45,46 @@ export const GoodsTablePage = () => {
     }));
   };
 
+  const handlerFilterText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilters({
+      ...filters,
+      text: e.target.value,
+      offset: "0",
+      limit: "10",
+    });
+  };
+
+  const handlerFilterCategory = (value: string) => {
+    setFilters({
+      ...filters,
+      categoryTypeIds: value,
+      offset: "0",
+      limit: "10",
+    });
+  };
+
+  const handlerFilterPrice = (value: number[]) => {
+    setFilters({
+      ...filters,
+      minPrice: String(value[0] * 10),
+      maxPrice: String(value[1] * 10),
+      offset: "0",
+      limit: "10",
+    });
+  };
+
+  const handlerPagination = (page: number, pageSize: number | undefined) => {
+    setPage(page);
+    if (pageSize) {
+      setFilters({
+        ...filters,
+        limit: String(pageSize),
+        offset: String((page - 1) * pageSize),
+      });
+      setPageSize(pageSize);
+    }
+  };
+
   const columns = [
     {
       title: "Категория",
@@ -116,17 +156,7 @@ export const GoodsTablePage = () => {
         <p className={css.filtersTitle}>Параметры поиска:</p>
         <div className={css.filterItem}>
           <label className={css.titleItem}>По товару:</label>
-          <Input
-            value={filters.text}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setFilters({
-                ...filters,
-                text: e.target.value,
-                offset: "0",
-                limit: "10",
-              });
-            }}
-          />
+          <Input value={filters.text} onChange={handlerFilterText} />
         </div>
         <div className={css.filterItem}>
           <label className={css.titleItem}>По категории:</label>
@@ -134,14 +164,7 @@ export const GoodsTablePage = () => {
             <Select
               defaultValue={categoriesItems[0].label}
               style={{ width: "70%" }}
-              onChange={(value: string) => {
-                setFilters({
-                  ...filters,
-                  categoryTypeIds: value,
-                  offset: "0",
-                  limit: "10",
-                });
-              }}
+              onChange={handlerFilterCategory}
             >
               {categoriesItems.map((item) => (
                 <Select.Option key={item.id} value={item.id}>
@@ -158,15 +181,7 @@ export const GoodsTablePage = () => {
             range
             step={1}
             defaultValue={[20, 50]}
-            onChange={(value) => {
-              setFilters({
-                ...filters,
-                minPrice: String(value[0] * 10),
-                maxPrice: String(value[1] * 10),
-                offset: "0",
-                limit: "10",
-              });
-            }}
+            onChange={handlerFilterPrice}
           />
         </div>
       </div>
@@ -188,17 +203,7 @@ export const GoodsTablePage = () => {
               }}
             />
             <Pagination
-              onChange={(page: number, pageSize: number | undefined) => {
-                setPage(page);
-                if (pageSize) {
-                  setFilters({
-                    ...filters,
-                    limit: String(pageSize),
-                    offset: String((page - 1) * pageSize),
-                  });
-                  setPageSize(pageSize);
-                }
-              }}
+              onChange={handlerPagination}
               total={totalItems}
               current={page}
               pageSize={pageSize}

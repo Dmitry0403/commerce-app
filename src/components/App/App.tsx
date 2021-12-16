@@ -24,37 +24,35 @@ export enum LINKS {
 }
 
 export const App = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  let [status, setStatus] = useState(false);
 
-  const changeLogin = () => {
-    setIsLogin(true);
+  const changeStatus = () => {
+    setStatus((prevState) => (status = !prevState));
   };
 
-  if (isLogin) {
-    return (
-      <div>
-        <Header />
-        <Routes>
-          <Route path={LINKS.table} element={<GoodsTablePage />} />
-          <Route path={LINKS.cart} element={<CartPage />} />
-          <Route path={LINKS.product + LINKS.id} element={<GoodsPage />} />
-          <Route
-            path={LINKS.category + LINKS.typeId}
-            element={<CategoryPage />}
-          />
-          <Route path={LINKS.start} element={<StartPage />} />
-          <Route path="*" element={<Navigate to={LINKS.start} />} />
-        </Routes>
-        <Footer />
-      </div>
-    );
-  } else {
-    return (
+  return (
+    <div>
+      <Header status={status} changeLoginStatus={changeStatus}/>
       <Routes>
-        <Route path={LINKS.logo} element={<LoginPage changeLoginStatus={changeLogin}/>} />
-        <Route path={LINKS.reg} element={<RegisterPage changeLoginStatus={changeLogin}/>} />
-        <Route path="*" element={<Navigate to={LINKS.logo} />} />
+        <Route
+          path={LINKS.logo}
+          element={<LoginPage changeLoginStatus={changeStatus} />}
+        />
+        <Route
+          path={LINKS.reg}
+          element={<RegisterPage changeLoginStatus={changeStatus} />}
+        />
+        <Route path={LINKS.table} element={<GoodsTablePage />} />
+        <Route path={LINKS.cart} element={<CartPage />} />
+        <Route path={LINKS.product + LINKS.id} element={<GoodsPage />} />
+        <Route
+          path={LINKS.category + LINKS.typeId}
+          element={<CategoryPage />}
+        />
+        <Route path={LINKS.start} element={<StartPage />} />
+        <Route path="*" element={<Navigate to={LINKS.start} />} />
       </Routes>
-    );
-  }
+      <Footer />
+    </div>
+  );
 };

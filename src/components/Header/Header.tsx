@@ -1,6 +1,17 @@
-import { Layout, Badge, AutoComplete } from "antd";
+import {
+  Layout,
+  Badge,
+  AutoComplete,
+  Avatar,
+  Button,
+  notification,
+} from "antd";
 import { debounce } from "lodash";
-import { ShoppingCartOutlined, ShoppingOutlined } from "@ant-design/icons";
+import {
+  ShoppingCartOutlined,
+  ShoppingOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import css from "./styles.module.css";
 import { useCallback, useEffect, useState } from "react";
@@ -10,7 +21,12 @@ import { LINKS } from "../App";
 import { goodsAction, getGoodsSlice } from "../../store/goodsReducer";
 import { LOAD_STATUSES } from "../../store/constatns";
 
-export const Header: React.FC = () => {
+interface StatusType {
+  status: boolean;
+  changeLoginStatus: () => void;
+}
+
+export const Header: React.FC<StatusType> = ({ status, changeLoginStatus }) => {
   const { Header } = Layout;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,6 +38,28 @@ export const Header: React.FC = () => {
 
   const cart = useSelector(getCart);
   const amountCart = cart.length;
+
+  const btn = (
+    <Button
+      type="primary"
+      onClick={() => {
+        changeLoginStatus();
+        notification.close("close");
+      }}
+    >
+      Да
+    </Button>
+  );
+
+  const handlerChangeStatus = () => {
+    status
+      ? notification.open({
+          message: "Выходите с аккаунта?",
+          key: "close",
+          btn,
+        })
+      : navigate(LINKS.logo);
+  };
 
   const selectGoods = (value: string) => {
     setValue(value);
@@ -74,6 +112,20 @@ export const Header: React.FC = () => {
           <ShoppingCartOutlined />
         </Badge>
       </Link>
+
+      <Button
+        style={{ border: "none", borderRadius: "50%" }}
+        onClick={handlerChangeStatus}
+      >
+        <Avatar
+          style={
+            status
+              ? { backgroundColor: "#87d068" }
+              : { backgroundColor: "#ccc" }
+          }
+          icon={<UserOutlined />}
+        />
+      </Button>
     </Header>
   );
 };
