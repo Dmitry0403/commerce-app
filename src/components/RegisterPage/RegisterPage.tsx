@@ -108,10 +108,10 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
 
   const handlerSubmit = () => {
     if (user.password !== confirmPass) {
-      notification.open({
-        message: "Пароли не совпадают",
-        duration: 1.7,
-      });
+      setErrors((prevState) => ({
+        ...prevState,
+        password: "пароли не совпадают",
+      }));
       return;
     }
 
