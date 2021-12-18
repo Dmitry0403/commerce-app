@@ -12,12 +12,13 @@ interface UserType {
   surname?: string;
   email: string;
   password: string;
+  confirmPass: string;
   gender?: string;
-  interests: string[];
+  interests: number[];
   isSubscribe: boolean;
   secretType: string;
   secretAnswer: string;
-  bornAt: string;
+  bornAt?: string;
 }
 
 interface RegisterProps {
@@ -27,18 +28,18 @@ interface RegisterProps {
 export const RegisterPage: React.FC<RegisterProps> = (props) => {
   const navigate = useNavigate();
   const categories = useSelector(getSideMenuItems);
-  const [confirmPass, setConfirmPass] = useState("");
   const [user, setUser] = useState<UserType>({
     name: "",
     surname: "",
     email: "",
     password: "",
+    confirmPass: "",
     gender: "",
     interests: [],
     isSubscribe: true,
     secretType: "",
     secretAnswer: "",
-    bornAt: "",
+    bornAt: undefined,
   });
 
   const [errors, setErrors] = useState<UserType>({
@@ -46,6 +47,7 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
     surname: "",
     email: "",
     password: "",
+    confirmPass: "",
     gender: "",
     interests: [],
     isSubscribe: true,
@@ -56,8 +58,15 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
 
   let schema = yup.object().shape({
     secretType: yup.string(),
-    secretAnswer: yup.string(),
-    bornAt: yup.date().min(1930.01, "не старше 1930 года рождения"),
+    secretAnswer: yup.string().when("secretType", {
+      is: (secretType: string) => Boolean(secretType),
+      then: yup.string().required("введите ответ на секретный вопрос"),
+    }),
+    bornAt: yup
+      .date()
+      .test((value) => Boolean(value))
+      .required("обязательное поле")
+      .min(1930.01, "не старше 1930 года рождения"),
     isSubscribe: yup.boolean(),
     interests: yup.array().min(2, "выберете мин 2 категории"),
     gender: yup.string(),
@@ -65,6 +74,13 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
       .string()
       .min(6, "минимум 6 символов")
       .required("обязательное поле"),
+    confirmPass: yup
+      .string()
+      .test(
+        `is-${user.password}`,
+        "пароли не совпадают",
+        (value) => value === user.password
+      ),
     email: yup.string().email().required("обязательное поле"),
     surname: yup.string().min(2, "минимум 2 символа"),
     name: yup
@@ -85,7 +101,7 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
     }));
   };
 
-  const handlerCheckbox = (value: string) => {
+  const handlerCheckbox = (value: number) => {
     if (user.interests.find((item) => item === value)) {
       setUser((prevState) => ({
         ...prevState,
@@ -97,6 +113,10 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
         interests: prevState.interests.concat([value]),
       }));
     }
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      interests: [],
+    }));
   };
 
   const handlerSwitch = (value: boolean) => {
@@ -107,26 +127,8 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
   };
 
   const handlerSubmit = () => {
-    if (user.password !== confirmPass) {
-      setErrors((prevState) => ({
-        ...prevState,
-        password: "пароли не совпадают",
-      }));
-      return;
-    }
-
-    if (user.secretType) {
-      if (!user.secretAnswer) {
-        setErrors((prevState) => ({
-          ...prevState,
-          secretAnswer: "введите ответ на секретный вопрос",
-        }));
-        return;
-      }
-    }
-
     schema
-      .validate(user)
+      .validate(user, { abortEarly: false })
       .then((value) => {
         if (value) {
           notification.open({
@@ -140,23 +142,23 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
         } else throw new Error();
       })
       .catch((err) => {
-        const errorKey = err.path;
-        const errorMessage = err.errors[0];
+        const ValidationError = err.inner;
+        ValidationError.map((item: any) =>
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            [item.params.path]: item.errors[0],
+          }))
+        );
         notification.open({
           message: "Проверьте корректность заполнения формы",
           duration: 1.5,
         });
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          [errorKey]: errorMessage,
-        }));
       });
   };
 
   return (
     <div className={css.wrapper}>
       <h1>Регистрация</h1>
-
       <div className={css.userForm}>
         <section>
           <div className={css.inputItem}>
@@ -207,13 +209,14 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
             <label>Подтвердите пароль:</label>
             <Input.Password
               type="password"
-              value={confirmPass}
+              value={user.confirmPass}
               name="confirmPass"
               className={
-                confirmPass === user.password ? css.userInput : css.error
+                user.confirmPass === user.password ? css.userInput : css.error
               }
-              onChange={(e) => setConfirmPass(e.target.value)}
+              onChange={handlerChange}
             />
+            <div className={css.errorMessage}>{errors.confirmPass}</div>
           </div>
           <div className={css.inputItem}>
             <label>Пол:</label>
@@ -243,7 +246,7 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
                 <Input
                   type="checkbox"
                   name="interests"
-                  onClick={() => handlerCheckbox(item.type)}
+                  onClick={() => handlerCheckbox(item.id)}
                 />
                 <label>{item.label}</label>
               </div>

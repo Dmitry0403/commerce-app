@@ -22,4 +22,3 @@ export const store = createStore(reducer, compose( applyMiddleware(thunk),
 export type RootState = ReturnType<typeof store.getState>
 
 
-
