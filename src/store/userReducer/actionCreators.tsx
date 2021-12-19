@@ -1,25 +1,12 @@
-import { USER_ACTIONS, UserLoginType } from "./constans";
-
+import { USER_ACTIONS, UserTokenType } from "./constans";
 import { Api } from "../../api";
-import { UserType } from "../../components/RegisterPage";
+import { UserRegType } from "../../components/RegisterPage";
+import { UserType } from "../../components/LoginPage";
 import { LOAD_STATUSES } from "../constatns";
-import { userActions } from ".";
 
-export const setUser = () => ({
-  type: USER_ACTIONS.SET_USER,
-});
-
-export const setRegSuccess = () => ({
-  type: USER_ACTIONS.SET_USER_SUCCESS,
-});
-
-export const setUserSuccess = (payload: UserLoginType) => ({
+export const setUserSuccess = (payload: UserTokenType) => ({
   type: USER_ACTIONS.SET_USER_SUCCESS,
   payload,
-});
-
-export const setUserFailure = () => ({
-  type: USER_ACTIONS.SET_USER_FAILURE,
 });
 
 export const changeLoadStatus = (loadStatus: LOAD_STATUSES) => ({
@@ -27,25 +14,29 @@ export const changeLoadStatus = (loadStatus: LOAD_STATUSES) => ({
   loadStatus,
 });
 
-export const fetchReg = (dataUser: UserType) => async (dispatch: any) => {
-  dispatch(userActions.changeLoadStatus(LOAD_STATUSES.LOADING));
+export const fetchReg = (dataUser: UserRegType) => async (dispatch: any) => {
+  dispatch(changeLoadStatus(LOAD_STATUSES.LOADING));
   try {
     const resp = await Api.prototype.getReg(dataUser);
     if (resp.ok) {
-      dispatch(userActions.changeLoadStatus(LOAD_STATUSES.SUCCESS));
+      dispatch(changeLoadStatus(LOAD_STATUSES.SUCCESS));
     }
   } catch (error) {
-    dispatch(userActions.changeLoadStatus(LOAD_STATUSES.FAILURE));
+    dispatch(changeLoadStatus(LOAD_STATUSES.FAILURE));
   }
 };
 
-// export const fetchUser = (dataUser: UserType, path: string) => async (dispatch: any) => {
-//   dispatch(setUser());
-//   try {
-//     const resp = await Api.prototype.getUser(dataUser, path);
-
-//     dispatch(setUserSuccess(payload));
-//   } catch (error) {
-//     dispatch(setUserFailure());
-//   }
-// };
+export const fetchUser = (loginUser: UserType) => async (dispatch: any) => {
+  dispatch(changeLoadStatus(LOAD_STATUSES.LOADING));
+  try {
+    const resp = await Api.prototype.getUser(loginUser);
+    if (resp.ok) {
+      const userToken: UserTokenType = await resp.json();
+      dispatch(setUserSuccess(userToken));
+    } else {
+      throw new Error("ошибка");
+    }
+  } catch (error) {
+    dispatch(changeLoadStatus(LOAD_STATUSES.FAILURE));
+  }
+};

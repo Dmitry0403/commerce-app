@@ -1,14 +1,13 @@
 import { LOAD_STATUSES } from "../constatns";
 
-
-export interface UserLoginType {
+export interface UserTokenType {
   login: string;
   token: string;
-  isAuth: boolean;
 }
 
 export interface UserStateType {
-  user: UserLoginType;
+  user: UserTokenType;
+  isAuth: boolean;
   loadStatus: LOAD_STATUSES;
 }
 

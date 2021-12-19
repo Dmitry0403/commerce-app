@@ -20,7 +20,7 @@ export const getDataForFetch = (obj: any) => {
   return newObj;
 };
 
-export interface UserType {
+export interface UserRegType {
   name: string;
   surname?: string;
   email: string;
@@ -38,12 +38,12 @@ interface RegisterProps {
   changeLoginStatus: () => void;
 }
 
-export const RegisterPage: React.FC<RegisterProps> = (props) => {
+export const RegisterPage: React.FC<RegisterProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const categories = useSelector(getSideMenuItems);
   const loadStatus = useSelector(getUserSlice).loadStatus;
-  const [user, setUser] = useState<UserType>({
+  const [user, setUser] = useState<UserRegType>({
     name: "",
     surname: "",
     email: "",
@@ -57,7 +57,7 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
     bornAt: undefined,
   });
 
-  const [errors, setErrors] = useState<UserType>({
+  const [errors, setErrors] = useState<UserRegType>({
     name: "",
     surname: "",
     email: "",
@@ -105,16 +105,19 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
   });
 
   useEffect(() => {
-    dispatch(userActions.changeLoadStatus(LOAD_STATUSES.REGISTRATION));
-    dispatch(menuActions.fetchCategoryItems(""));
+    if (!user.name) {
+      dispatch(userActions.changeLoadStatus(LOAD_STATUSES.REGISTRATION));
+      dispatch(menuActions.fetchCategoryItems(""));
+    }
     if (loadStatus === LOAD_STATUSES.SUCCESS) {
       notification.open({
         message: "Вы успешно прошли регистрацию",
         duration: 2,
       });
       navigate(LINKS.logo);
+      dispatch(userActions.changeLoadStatus(LOAD_STATUSES.REGISTRATION));
     }
-  }, [dispatch, loadStatus, navigate]);
+  }, [dispatch, loadStatus, navigate, user]);
 
   const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
@@ -153,7 +156,7 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
     }));
   };
 
-  const fetchDataUser = (data: UserType) => {
+  const fetchDataUser = (data: UserRegType) => {
     const dataUser = {
       name: data.name,
       surname: data.surname,
@@ -170,7 +173,6 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
     const dataUserForFetch = getDataForFetch(dataUser);
     dispatch(userActions.fetchReg(dataUserForFetch));
   };
- 
 
   const handlerSubmit = () => {
     schema

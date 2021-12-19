@@ -1,10 +1,11 @@
 import { LOAD_STATUSES } from "../constatns";
 import { Action } from "redux";
 import { USER_ACTIONS } from "./constans";
-import type { UserStateType, UserLoginType } from "./constans";
+import type { UserStateType, UserTokenType } from "./constans";
 
 const INITIAL_STATE = {
-  user: { login: "", token: "", isAuth: false },
+  user: { login: "", token: "" },
+  isAuth: false,
   loadStatus: LOAD_STATUSES.UNKNOWN,
 };
 
@@ -20,27 +21,18 @@ export const userReducer = (
       };
       return {
         ...store,
-        loadStatus
-      };
-    case USER_ACTIONS.SET_USER:
-      return {
-        ...store,
-        loadStatus: LOAD_STATUSES.LOADING,
+        loadStatus,
       };
     case USER_ACTIONS.SET_USER_SUCCESS:
       let { payload } = action as {
         type: USER_ACTIONS.SET_USER_SUCCESS;
-        payload: UserLoginType;
+        payload: UserTokenType;
       };
       return {
         ...store,
         user: payload,
+        isAuth: true,
         loadStatus: LOAD_STATUSES.SUCCESS,
-      };
-    case USER_ACTIONS.SET_USER_FAILURE:
-      return {
-        ...store,
-        loadStatus: LOAD_STATUSES.FAILURE,
       };
     default:
       return store;
