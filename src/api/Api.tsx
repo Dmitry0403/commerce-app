@@ -2,6 +2,7 @@ import type { CategoryType } from "../store/categoriesReducer";
 import type { CategoryListType } from "../components/CategoryList";
 import type { GoodsType, GoodsCardType } from "../store/goodsReducer";
 import type { CartType } from "../store/cartReducer";
+import type { UserType } from "../components/RegisterPage";
 
 export class Api {
   getCategories(params: string): Promise<{ categories: CategoryType[] }> {
@@ -43,5 +44,20 @@ export class Api {
       method: method,
       body: JSON.stringify(data),
     });
+  }
+
+  getReg(data: any): Promise<Response> {
+    return fetch(`/api/registration`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then((resp) => {
+        if (resp.ok) {
+          return resp
+        } else {
+          throw new Error("ошибка");
+        }
+      })
+      .catch();
   }
 }

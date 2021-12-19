@@ -5,7 +5,11 @@ import { Input, Select, Slider } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { goodsAction, getGoodsSlice } from "../../store/goodsReducer";
-import { CategoryType, getSideMenuItems } from "../../store/categoriesReducer";
+import {
+  CategoryType,
+  getSideMenuItems,
+  menuActions,
+} from "../../store/categoriesReducer";
 import { useNavigate } from "react-router";
 import { Loader } from "../Loader";
 import { LOAD_STATUSES } from "../../store/constatns";
@@ -37,11 +41,44 @@ export const GoodsTablePage = () => {
     sortDirection: "",
   });
 
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
+
+  const getParams = (obj: any) => {
+    let newObj: any = {};
+    for (let key in obj) {
+      if (obj[key]) {
+        newObj[key] = obj[key];
+      }
+    }
+    return newObj;
+  };
+
+  const getDataFilter = (filtersToFetch: FiltersType) => {
+    const queryParams = getParams(filtersToFetch);
+    const searchParams = new URLSearchParams(queryParams).toString();
+    dispatch(goodsAction.fetchGoods(searchParams));
+  };
+  const memoizedFilter = useCallback(debounce(getDataFilter, 1500), []);
+  const categoriesItems: CategoryType[] = useSelector(getSideMenuItems);
+
+  useEffect(() => {
+    if (!categoriesItems[0]) {
+      dispatch(menuActions.fetchCategoryItems(""));
+    }
+    memoizedFilter(filters);
+  }, [memoizedFilter, filters, categoriesItems, dispatch]);
+
+  const dataGoods: GoodsCardType[] = useSelector(getGoodsSlice).items;
+  const totalItems: number = useSelector(getGoodsSlice).total;
+  const pageStatus = useSelector(getGoodsSlice).loadStatus;
+  const maks = { 0: "0", 100: "100х10" };
+
   const setSort = (sortBy: string) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       sortBy,
-      sortDirection: prevFilters.sortDirection === "asc" ? "desk" : "asc",
+      sortDirection: prevFilters.sortDirection === "asc" ? "desc" : "asc",
     }));
   };
 
@@ -119,37 +156,6 @@ export const GoodsTablePage = () => {
     },
   ];
 
-  const dispatch = useDispatch();
-  let navigate = useNavigate();
-
-  const getParams = (obj: any) => {
-    let newObj: any = {};
-    for (let key in obj) {
-      if (obj[key]) {
-        newObj[key] = obj[key];
-      }
-    }
-    return newObj;
-  };
-
-  const getDataFilter = (filtersToFetch: FiltersType) => {
-    const queryParams = getParams(filtersToFetch);
-    const searchParams = new URLSearchParams(queryParams).toString();
-    dispatch(goodsAction.fetchGoods(searchParams));
-  };
-
-  const memoizedFilter = useCallback(debounce(getDataFilter, 1500), []);
-
-  useEffect(() => {
-    memoizedFilter(filters);
-  }, [memoizedFilter, filters]);
-
-  const dataGoods: GoodsCardType[] = useSelector(getGoodsSlice).items;
-  const totalItems: number = useSelector(getGoodsSlice).total;
-  const categoriesItems: CategoryType[] = useSelector(getSideMenuItems);
-  const pageStatus = useSelector(getGoodsSlice).loadStatus;
-  const maks = { 0: "0", 100: "100х10" };
-
   return (
     <div className={css.tablePage}>
       <div className={css.filters}>
@@ -162,7 +168,7 @@ export const GoodsTablePage = () => {
           <label className={css.titleItem}>По категории:</label>
           <Input.Group>
             <Select
-              defaultValue={categoriesItems[0].label}
+              defaultValue="Дом, сад, зоотовары"
               style={{ width: "70%" }}
               onChange={handlerFilterCategory}
             >

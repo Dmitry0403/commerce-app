@@ -1,18 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import css from "./styles.module.css";
 import { Input, notification, Switch } from "antd";
 import { LINKS } from "../App";
 import { useNavigate } from "react-router";
 import * as yup from "yup";
-import { useSelector } from "react-redux";
-import { getSideMenuItems } from "../../store/categoriesReducer";
+import { useSelector, useDispatch } from "react-redux";
+import { getSideMenuItems, menuActions } from "../../store/categoriesReducer";
+import { getUserSlice, userActions } from "../../store/userReducer";
+import { LOAD_STATUSES } from "../../store/constatns";
+import { Loader } from "../Loader";
 
-interface UserType {
+export const getDataForFetch = (obj: any) => {
+  let newObj: any = {};
+  for (let key in obj) {
+    if (obj[key]) {
+      newObj[key] = obj[key];
+    }
+  }
+  return newObj;
+};
+
+export interface UserType {
   name: string;
   surname?: string;
   email: string;
   password: string;
-  confirmPass: string;
+  confirmPass?: string;
   gender?: string;
   interests: number[];
   isSubscribe: boolean;
@@ -26,8 +39,10 @@ interface RegisterProps {
 }
 
 export const RegisterPage: React.FC<RegisterProps> = (props) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const categories = useSelector(getSideMenuItems);
+  const loadStatus = useSelector(getUserSlice).loadStatus;
   const [user, setUser] = useState<UserType>({
     name: "",
     surname: "",
@@ -89,6 +104,18 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
       .required("обязательное поле"),
   });
 
+  useEffect(() => {
+    dispatch(userActions.changeLoadStatus(LOAD_STATUSES.REGISTRATION));
+    dispatch(menuActions.fetchCategoryItems(""));
+    if (loadStatus === LOAD_STATUSES.SUCCESS) {
+      notification.open({
+        message: "Вы успешно прошли регистрацию",
+        duration: 2,
+      });
+      navigate(LINKS.logo);
+    }
+  }, [dispatch, loadStatus, navigate]);
+
   const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
     setErrors((prevErrors) => ({
@@ -126,19 +153,31 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
     }));
   };
 
+  const fetchDataUser = (data: UserType) => {
+    const dataUser = {
+      name: data.name,
+      surname: data.surname,
+      login: data.email,
+      password: data.password,
+      gender: data.gender,
+      interests: data.interests,
+      isSubscribe: data.isSubscribe,
+      secret: data.secretType
+        ? { type: data.secretType, answer: data.secretAnswer }
+        : data.secretType,
+      bornAt: data.bornAt,
+    };
+    const dataUserForFetch = getDataForFetch(dataUser);
+    dispatch(userActions.fetchReg(dataUserForFetch));
+  };
+ 
+
   const handlerSubmit = () => {
     schema
       .validate(user, { abortEarly: false })
       .then((value) => {
         if (value) {
-          notification.open({
-            message: "Вы успешно прошли регистрацию",
-            duration: 1.6,
-          });
-          setTimeout(() => {
-            navigate(LINKS.start);
-            props.changeLoginStatus();
-          }, 1700);
+          fetchDataUser(user);
         } else throw new Error();
       })
       .catch((err) => {
@@ -157,155 +196,171 @@ export const RegisterPage: React.FC<RegisterProps> = (props) => {
   };
 
   return (
-    <div className={css.wrapper}>
-      <h1>Регистрация</h1>
-      <div className={css.userForm}>
-        <section>
-          <div className={css.inputItem}>
-            <label>Имя:</label>
-            <Input
-              type="text"
-              value={user.name}
-              name="name"
-              className={errors.name ? css.error : css.userInput}
-              onChange={handlerChange}
-            />
-            <div className={css.errorMessage}>{errors.name}</div>
-          </div>
-          <div className={css.inputItem}>
-            <label>Фамилия:</label>
-            <Input
-              type="text"
-              value={user.surname}
-              name="surname"
-              className={errors.surname ? css.error : css.userInput}
-              onChange={handlerChange}
-            />
-            <div className={css.errorMessage}>{errors.surname}</div>
-          </div>
-          <div className={css.inputItem}>
-            <label>Почта:</label>
-            <Input
-              type="email"
-              value={user.email}
-              name="email"
-              className={errors.email ? css.error : css.userInput}
-              onChange={handlerChange}
-            />
-            <div className={css.errorMessage}>{errors.email}</div>
-          </div>
-          <div className={css.inputItem}>
-            <label>Пароль:</label>
-            <Input.Password
-              type="password"
-              value={user.password}
-              name="password"
-              className={errors.password ? css.error : css.userInput}
-              onChange={handlerChange}
-            />
-            <div className={css.errorMessage}>{errors.password}</div>
-          </div>
-          <div className={css.inputItem}>
-            <label>Подтвердите пароль:</label>
-            <Input.Password
-              type="password"
-              value={user.confirmPass}
-              name="confirmPass"
-              className={
-                user.confirmPass === user.password ? css.userInput : css.error
-              }
-              onChange={handlerChange}
-            />
-            <div className={css.errorMessage}>{errors.confirmPass}</div>
-          </div>
-          <div className={css.inputItem}>
-            <label>Пол:</label>
-            <Input
-              type="radio"
-              id="male"
-              value="male"
-              name="gender"
-              onChange={handlerChange}
-            />
-            <label id="male">муж</label>
-            <Input
-              type="radio"
-              id="femail"
-              value="female"
-              name="gender"
-              onChange={handlerChange}
-            />
-            <label id="female">жен</label>
-          </div>
-        </section>
-        <section>
-          <div className={css.inputItem}>
-            <label>Любимые категории:</label>
-            {categories.map((item) => (
-              <div key={item.id}>
+    <div>
+      {loadStatus === LOAD_STATUSES.REGISTRATION && (
+        <div className={css.wrapper}>
+          <h1>Регистрация</h1>
+          <div className={css.userForm}>
+            <section>
+              <div className={css.inputItem}>
+                <label>Имя:</label>
                 <Input
-                  type="checkbox"
-                  name="interests"
-                  onClick={() => handlerCheckbox(item.id)}
+                  type="text"
+                  value={user.name}
+                  name="name"
+                  className={errors.name ? css.error : css.userInput}
+                  onChange={handlerChange}
                 />
-                <label>{item.label}</label>
+                <div className={css.errorMessage}>{errors.name}</div>
               </div>
-            ))}
-            <div className={css.errorMessage}>{errors.interests}</div>
+              <div className={css.inputItem}>
+                <label>Фамилия:</label>
+                <Input
+                  type="text"
+                  value={user.surname}
+                  name="surname"
+                  className={errors.surname ? css.error : css.userInput}
+                  onChange={handlerChange}
+                />
+                <div className={css.errorMessage}>{errors.surname}</div>
+              </div>
+              <div className={css.inputItem}>
+                <label>Почта:</label>
+                <Input
+                  type="email"
+                  value={user.email}
+                  name="email"
+                  className={errors.email ? css.error : css.userInput}
+                  onChange={handlerChange}
+                />
+                <div className={css.errorMessage}>{errors.email}</div>
+              </div>
+              <div className={css.inputItem}>
+                <label>Пароль:</label>
+                <Input.Password
+                  type="password"
+                  value={user.password}
+                  name="password"
+                  className={errors.password ? css.error : css.userInput}
+                  onChange={handlerChange}
+                />
+                <div className={css.errorMessage}>{errors.password}</div>
+              </div>
+              <div className={css.inputItem}>
+                <label>Подтвердите пароль:</label>
+                <Input.Password
+                  type="password"
+                  value={user.confirmPass}
+                  name="confirmPass"
+                  className={
+                    user.confirmPass === user.password
+                      ? css.userInput
+                      : css.error
+                  }
+                  onChange={handlerChange}
+                />
+                <div className={css.errorMessage}>{errors.confirmPass}</div>
+              </div>
+              <div className={css.inputItem}>
+                <label>Пол:</label>
+                <Input
+                  type="radio"
+                  id="male"
+                  value="male"
+                  name="gender"
+                  onChange={handlerChange}
+                />
+                <label id="male">муж</label>
+                <Input
+                  type="radio"
+                  id="femail"
+                  value="female"
+                  name="gender"
+                  onChange={handlerChange}
+                />
+                <label id="female">жен</label>
+              </div>
+            </section>
+            <section>
+              <div className={css.inputItem}>
+                <label>Любимые категории:</label>
+                {categories.map((item) => (
+                  <div key={item.id}>
+                    <Input
+                      type="checkbox"
+                      name="interests"
+                      onClick={() => handlerCheckbox(item.id)}
+                    />
+                    <label>{item.label}</label>
+                  </div>
+                ))}
+                <div className={css.errorMessage}>{errors.interests}</div>
+              </div>
+              <div className={css.inputItem}>
+                <label>Подписка на новости:</label>
+                <Switch
+                  size="small"
+                  defaultChecked
+                  onChange={(checked) => handlerSwitch(checked)}
+                />
+              </div>
+              <div className={css.inputItem}>
+                <label>Дата рождения:</label>
+                <Input
+                  type="date"
+                  value={user.bornAt}
+                  name="bornAt"
+                  onChange={handlerChange}
+                />
+                <div className={css.errorMessage}>{errors.bornAt}</div>
+              </div>
+              <div className={css.inputItem}>
+                <label>Секретный вопрос:</label>
+                <Input
+                  type="text"
+                  value={user.secretType}
+                  name="secretType"
+                  className={errors.secretType ? css.error : css.userInput}
+                  onChange={handlerChange}
+                />
+              </div>
+              {user.secretType && (
+                <div className={css.inputItem}>
+                  <label>ответ:</label>
+                  <Input
+                    type="text"
+                    value={user.secretAnswer}
+                    name="secretAnswer"
+                    className={errors.secretAnswer ? css.error : css.userInput}
+                    onChange={handlerChange}
+                  />
+                  <div className={css.errorMessage}>{errors.secretAnswer}</div>
+                </div>
+              )}
+            </section>
           </div>
-          <div className={css.inputItem}>
-            <label>Подписка на новости:</label>
-            <Switch
-              size="small"
-              defaultChecked
-              onChange={(checked) => handlerSwitch(checked)}
-            />
+          <div className={css.linkBtn}>
+            <button className={css.button} onClick={handlerSubmit}>
+              Сохранить
+            </button>
           </div>
-          <div className={css.inputItem}>
-            <label>Дата рождения:</label>
-            <Input
-              type="date"
-              value={user.bornAt}
-              name="bornAt"
-              onChange={handlerChange}
-            />
-            <div className={css.errorMessage}>{errors.bornAt}</div>
+          <div className={css.linkBtn}>
+            <button
+              className={css.button}
+              onClick={() => navigate(LINKS.start)}
+            >
+              Отмена
+            </button>
           </div>
-          <div className={css.inputItem}>
-            <label>Секретный вопрос:</label>
-            <Input
-              type="text"
-              value={user.secretType}
-              name="secretType"
-              className={errors.secretType ? css.error : css.userInput}
-              onChange={handlerChange}
-            />
-          </div>
-          {user.secretType && (
-            <div className={css.inputItem}>
-              <label>ответ:</label>
-              <Input
-                type="text"
-                value={user.secretAnswer}
-                name="secretAnswer"
-                className={errors.secretAnswer ? css.error : css.userInput}
-                onChange={handlerChange}
-              />
-              <div className={css.errorMessage}>{errors.secretAnswer}</div>
-            </div>
-          )}
-        </section>
-      </div>
-      <div className={css.linkBtn}>
-        <button className={css.button} onClick={handlerSubmit}>
-          Сохранить
-        </button>
-      </div>
-      <div className={css.linkBtn}>
-        <button className={css.button} onClick={() => navigate(LINKS.start)}>
-          Отмена
-        </button>
-      </div>
+        </div>
+      )}
+      {loadStatus === LOAD_STATUSES.LOADING && <Loader />}
+      {loadStatus === LOAD_STATUSES.FAILURE && (
+        <div className={css.errorPage}>
+          ОШИБКА ПЕРЕДАЧИ ДАННЫХ,
+          <span onClick={() => navigate(-1)}>ВЕРНУТЬСЯ НАЗАД </span>
+        </div>
+      )}
     </div>
   );
 };
