@@ -3,6 +3,6 @@ export enum LOAD_STATUSES {
     LOADING = "loading",
     SUCCESS = "loaded",
     FAILURE = "failure",
-    REGISTRATION = "registration"
+    START = "start"
   }
 

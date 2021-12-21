@@ -8,6 +8,7 @@ export interface UserTokenType {
 export interface UserStateType {
   user: UserTokenType;
   isAuth: boolean;
+  errorMessage: string;
   loadStatus: LOAD_STATUSES;
 }
 
@@ -16,4 +17,6 @@ export enum USER_ACTIONS {
   SET_USER = "setUser",
   SET_USER_SUCCESS = "setUserSuccess",
   SET_USER_FAILURE = "setUserFalure",
+  SET_ERROR_MESSAGE = "setErrorMessage",
+  SET_USER_EXIT = "setUsetExit"
 }

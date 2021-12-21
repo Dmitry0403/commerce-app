@@ -6,6 +6,7 @@ import type { UserStateType, UserTokenType } from "./constans";
 const INITIAL_STATE = {
   user: { login: "", token: "" },
   isAuth: false,
+  errorMessage: "",
   loadStatus: LOAD_STATUSES.UNKNOWN,
 };
 
@@ -33,6 +34,22 @@ export const userReducer = (
         user: payload,
         isAuth: true,
         loadStatus: LOAD_STATUSES.SUCCESS,
+      };
+    case USER_ACTIONS.SET_ERROR_MESSAGE:
+      let { errorMessage } = action as {
+        type: USER_ACTIONS.SET_ERROR_MESSAGE;
+        errorMessage: string;
+      };
+      return {
+        ...store,
+        errorMessage,
+      };
+    case USER_ACTIONS.SET_USER_EXIT:
+      return {
+        ...store,
+        user: { login: "", token: "" },
+        isAuth: false,
+        loadStatus: LOAD_STATUSES.START,
       };
     default:
       return store;

@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "antd";
-import { getCart, getCartLoadStatus } from "../../store/cartReducer/selectors";
+import { getCartSlice } from "../../store/cartReducer/selectors";
 import { cartActions } from "../../store/cartReducer";
 import { getGoodsSlice, goodsAction } from "../../store/goodsReducer";
 import { LOAD_STATUSES } from "../../store/constatns";
 import { Loader } from "../Loader";
+import { getUserSlice } from "../../store/userReducer";
 
 export enum BUTTON_STATUS {
   putInCart = "Положить в корзину",
@@ -18,6 +19,7 @@ export const GoodsPage: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const token  = useSelector(getUserSlice).user.token
 
   useEffect(() => {
     if (!id) {
@@ -31,10 +33,11 @@ export const GoodsPage: React.FC = () => {
 
   const dataGoodsPage = useSelector(getGoodsSlice).items[0];
   const pageStatus = useSelector(getGoodsSlice).loadStatus;
-  const cart = useSelector(getCart);
+  const cart = useSelector(getCartSlice).cart;
   let buttonStatus = BUTTON_STATUS.putInCart;
-  const cartLoadStatus = useSelector(getCartLoadStatus);
+  const cartLoadStatus = useSelector(getCartSlice).loadStatus;
 
+  
   if (cart.find((item) => item.id === dataGoodsPage.id)) {
     buttonStatus = BUTTON_STATUS.delFromCart;
   }
@@ -63,7 +66,7 @@ export const GoodsPage: React.FC = () => {
                 disabled={cartLoadStatus === LOAD_STATUSES.LOADING}
                 className={css.button}
                 onClick={() => {
-                  dispatch(cartActions.changeCart(dataGoodsPage, buttonStatus));
+                  dispatch(cartActions.changeCart(dataGoodsPage, buttonStatus, token));
                 }}
               >
                 {buttonStatus}

@@ -47,3 +47,20 @@ label {
   margin-bottom: 40px;
   border: red solid 3px;
 }
+
+.errorPage {
+  background-color: lightblue;
+  font-size: 26px;
+  color: rgb(67, 76, 85);
+  text-align: center;
+  padding: 5px;
+}
+
+.errorPage span {
+  color: rgb(67, 76, 85);
+}
+
+.errorPage span:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

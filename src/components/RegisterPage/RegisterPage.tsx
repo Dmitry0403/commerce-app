@@ -34,15 +34,12 @@ export interface UserRegType {
   bornAt?: string;
 }
 
-interface RegisterProps {
-  changeLoginStatus: () => void;
-}
-
-export const RegisterPage: React.FC<RegisterProps> = () => {
+export const RegisterPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const categories = useSelector(getSideMenuItems);
   const loadStatus = useSelector(getUserSlice).loadStatus;
+  const errorMessage = useSelector(getUserSlice).errorMessage;
   const [user, setUser] = useState<UserRegType>({
     name: "",
     surname: "",
@@ -106,7 +103,7 @@ export const RegisterPage: React.FC<RegisterProps> = () => {
 
   useEffect(() => {
     if (!user.name) {
-      dispatch(userActions.changeLoadStatus(LOAD_STATUSES.REGISTRATION));
+      dispatch(userActions.changeLoadStatus(LOAD_STATUSES.START));
       dispatch(menuActions.fetchCategoryItems(""));
     }
     if (loadStatus === LOAD_STATUSES.SUCCESS) {
@@ -115,7 +112,7 @@ export const RegisterPage: React.FC<RegisterProps> = () => {
         duration: 2,
       });
       navigate(LINKS.logo);
-      dispatch(userActions.changeLoadStatus(LOAD_STATUSES.REGISTRATION));
+      dispatch(userActions.changeLoadStatus(LOAD_STATUSES.START));
     }
   }, [dispatch, loadStatus, navigate, user]);
 
@@ -199,7 +196,7 @@ export const RegisterPage: React.FC<RegisterProps> = () => {
 
   return (
     <div>
-      {loadStatus === LOAD_STATUSES.REGISTRATION && (
+      {loadStatus === LOAD_STATUSES.START && (
         <div className={css.wrapper}>
           <h1>Регистрация</h1>
           <div className={css.userForm}>
@@ -359,8 +356,8 @@ export const RegisterPage: React.FC<RegisterProps> = () => {
       {loadStatus === LOAD_STATUSES.LOADING && <Loader />}
       {loadStatus === LOAD_STATUSES.FAILURE && (
         <div className={css.errorPage}>
-          ОШИБКА ПЕРЕДАЧИ ДАННЫХ,
-          <span onClick={() => navigate(-1)}>ВЕРНУТЬСЯ НАЗАД </span>
+          {errorMessage},
+          <span onClick={() => navigate(-1)}>вернуться назад </span>
         </div>
       )}
     </div>

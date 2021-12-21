@@ -4,7 +4,7 @@ import { CART_ACTIONS } from "./constans";
 import { LOAD_STATUSES } from "../constatns";
 import { Action } from "redux";
 
-const INITIAL_STATE = { cart: [], loadStatus: LOAD_STATUSES.UNKNOWN };
+const INITIAL_STATE: CartStateType = { cart: [], loadStatus: LOAD_STATUSES.UNKNOWN };
 
 export const cartReducer = (
   store: CartStateType = INITIAL_STATE,

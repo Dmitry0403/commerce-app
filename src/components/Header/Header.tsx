@@ -15,36 +15,37 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import css from "./styles.module.css";
 import { useCallback, useEffect, useState } from "react";
-import { cartActions, getCart } from "../../store/cartReducer";
+import { cartActions, getCartSlice } from "../../store/cartReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { LINKS } from "../App";
 import { goodsAction, getGoodsSlice } from "../../store/goodsReducer";
 import { LOAD_STATUSES } from "../../store/constatns";
+import { getUserSlice, userActions } from "../../store/userReducer";
 
-interface StatusType {
-  status: boolean;
-  changeLoginStatus: () => void;
-}
-
-export const Header: React.FC<StatusType> = ({ status, changeLoginStatus }) => {
+export const Header = () => {
   const { Header } = Layout;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const status = useSelector(getUserSlice).isAuth;
+  const token = useSelector(getUserSlice).user.token;
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    dispatch(cartActions.fetchCart());
-  }, [dispatch]);
+    dispatch(cartActions.fetchCart(token));
+  }, [dispatch, token]);
 
-  const cart = useSelector(getCart);
-  const amountCart = cart.length;
+  const cart = useSelector(getCartSlice).cart;
+  let amountCart: number;
+  amountCart = cart ? cart.length : 0;
 
   const btn = (
     <Button
       type="primary"
       onClick={() => {
-        changeLoginStatus();
+        dispatch(userActions.setUserExit());
+        localStorage.removeItem("userToken");
         notification.close("close");
+        navigate(LINKS.logo);
       }}
     >
       Да
