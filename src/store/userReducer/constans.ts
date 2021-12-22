@@ -13,10 +13,10 @@ export interface UserStateType {
 }
 
 export enum USER_ACTIONS {
-  CHANGE_LOAD_STATUS = "changeLoadStatus",
-  SET_USER = "setUser",
-  SET_USER_SUCCESS = "setUserSuccess",
-  SET_USER_FAILURE = "setUserFalure",
-  SET_ERROR_MESSAGE = "setErrorMessage",
-  SET_USER_EXIT = "setUsetExit"
+  CHANGE_LOAD_STATUS = "userData/changeLoadStatus",
+  SET_USER = "userData/setUser",
+  SET_USER_SUCCESS = "userData/setUserSuccess",
+  SET_USER_FAILURE = "userData/setUserFalure",
+  SET_ERROR_MESSAGE = "userData/setErrorMessage",
+  SET_USER_EXIT = "userData/setUsetExit"
 }

@@ -15,7 +15,7 @@ export const CategoryList: React.FC<CategoryListType> = (props) => {
   const { category, items } = props;
   return (
     <div className={css.categoryList}>
-      <Link to={LINKS.category + "/" + category.type}>
+      <Link to={LINKS.category + "/" + category.id}>
         <div className={css.title}>{category.label}</div>
       </Link>
       <div className={css.goodsList}>

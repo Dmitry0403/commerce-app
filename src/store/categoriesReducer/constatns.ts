@@ -1,9 +1,9 @@
 import { LOAD_STATUSES } from "../constatns";
 
 export enum CATEGORIES_ACTIONS {
-    SET_CATEGORIES = "setCategories",
-    SET_CATEGORIES_SUCCESS = "setCategoriesSuccess",
-    SET_CATEGORIES_FAILURE = "setCategoriesFalure"
+    SET_CATEGORIES = "categoryItems/setCategories",
+    SET_CATEGORIES_SUCCESS = "categoryItems/setCategoriesSuccess",
+    SET_CATEGORIES_FAILURE = "categoryItems/setCategoriesFalure"
 }
 
 export interface CategoryType {

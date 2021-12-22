@@ -63,7 +63,7 @@ export const GoodsTablePage = () => {
   const categoriesItems: CategoryType[] = useSelector(getSideMenuItems);
 
   useEffect(() => {
-    if (!categoriesItems[0]) {
+    if (!categoriesItems[1]) {
       dispatch(menuActions.fetchCategoryItems(""));
     }
     memoizedFilter(filters);

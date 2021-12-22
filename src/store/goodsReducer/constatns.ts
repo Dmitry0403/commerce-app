@@ -1,10 +1,10 @@
 import { LOAD_STATUSES } from "../constatns";
 
 export enum GOODS_ACTIONS {
-  SET_GOODS = "setGoods",
-  SET_GOODS_SUCCESS = "setGoodsSuccess",
-  SET_GOODS_SUCCESS_SEARCHHEADER = "setGoodsSuccessSearchHeader",
-  SET_GOODS_FAILURE = "setGoodsFalure",
+  SET_GOODS = "goodsData/setGoods",
+  SET_GOODS_SUCCESS = "goodsData/setGoodsSuccess",
+  SET_GOODS_SUCCESS_SEARCHHEADER = "goodsData/setGoodsSuccessSearchHeader",
+  SET_GOODS_FAILURE = "goodsData/setGoodsFalure",
 }
 
 export interface GoodsCardType {
