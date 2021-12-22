@@ -5,8 +5,8 @@ import { LINKS } from "../App";
 import { useNavigate } from "react-router";
 import * as yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import { getSideMenuItems, menuActions } from "../../store/categoriesReducer";
-import { getUserSlice, userActions } from "../../store/userReducer";
+import { sideMenuSelectors, menuActions } from "../../store/categoriesReducer";
+import { userSelectors, userActions } from "../../store/userReducer";
 import { LOAD_STATUSES } from "../../store/constatns";
 import { Loader } from "../Loader";
 
@@ -37,9 +37,9 @@ export interface UserRegType {
 export const RegisterPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const categories = useSelector(getSideMenuItems);
-  const loadStatus = useSelector(getUserSlice).loadStatus;
-  const errorMessage = useSelector(getUserSlice).errorMessage;
+  const categories = useSelector(sideMenuSelectors.getSideMenuItems);
+  const loadStatus = useSelector(userSelectors.getUserLoadStatus);
+  const errorMessage = useSelector(userSelectors.getErrorMessage);
   const [user, setUser] = useState<UserRegType>({
     name: "",
     surname: "",

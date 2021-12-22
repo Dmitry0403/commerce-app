@@ -4,7 +4,7 @@ import { Input } from "antd";
 import { LINKS } from "../App";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserSlice, userActions } from "../../store/userReducer";
+import { userSelectors, userActions } from "../../store/userReducer";
 import { LOAD_STATUSES } from "../../store/constatns";
 import { Loader } from "../Loader";
 
@@ -21,8 +21,8 @@ interface StateType {
 export const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const errorMessage = useSelector(getUserSlice).errorMessage;
-  const loadStatus = useSelector(getUserSlice).loadStatus;
+  const errorMessage = useSelector(userSelectors.getErrorMessage);
+  const loadStatus = useSelector(userSelectors.getUserLoadStatus);
   const [state, setState] = useState<StateType>({
     values: { login: "", password: "" },
     errors: { login: "", password: "" },

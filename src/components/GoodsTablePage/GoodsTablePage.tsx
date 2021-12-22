@@ -4,10 +4,10 @@ import { debounce } from "lodash";
 import { Input, Select, Slider } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { goodsAction, getGoodsSlice } from "../../store/goodsReducer";
+import { goodsAction, goodsSelectors } from "../../store/goodsReducer";
 import {
   CategoryType,
-  getSideMenuItems,
+  sideMenuSelectors,
   menuActions,
 } from "../../store/categoriesReducer";
 import { useNavigate } from "react-router";
@@ -60,7 +60,7 @@ export const GoodsTablePage = () => {
     dispatch(goodsAction.fetchGoods(searchParams));
   };
   const memoizedFilter = useCallback(debounce(getDataFilter, 1500), []);
-  const categoriesItems: CategoryType[] = useSelector(getSideMenuItems);
+  const categoriesItems: CategoryType[] = useSelector(sideMenuSelectors.getSideMenuItems);
 
   useEffect(() => {
     if (!categoriesItems[1]) {
@@ -69,9 +69,9 @@ export const GoodsTablePage = () => {
     memoizedFilter(filters);
   }, [memoizedFilter, filters, categoriesItems, dispatch]);
 
-  const dataGoods: GoodsCardType[] = useSelector(getGoodsSlice).items;
-  const totalItems: number = useSelector(getGoodsSlice).total;
-  const pageStatus = useSelector(getGoodsSlice).loadStatus;
+  const dataGoods: GoodsCardType[] = useSelector(goodsSelectors.getGoodsItems);
+  const totalItems: number = useSelector(goodsSelectors.getTotalGoodsItems);
+  const pageStatus = useSelector(goodsSelectors.getGoodsLoadStatus);
   const maks = { 0: "0", 100: "100х10" };
 
   const setSort = (sortBy: string) => {

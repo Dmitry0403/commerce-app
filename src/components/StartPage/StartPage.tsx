@@ -3,8 +3,7 @@ import { SideMenu } from "../SideMenu";
 import css from "./styles.module.css";
 import {
   popGoodsAction,
-  getPopGoods,
-  getPopGoodsLoadStatus,
+  popGoodsSelectors,
 } from "../../store/popularGoodsReducer";
 import { CategoryList } from "../CategoryList";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,10 +11,11 @@ import { useEffect } from "react";
 import { LOAD_STATUSES } from "../../store/constatns";
 import { Loader } from "../Loader";
 
-
 export const StartPage: React.FC = () => {
-  const popGoods = useSelector(getPopGoods);
-  const popGoodsLoadStatus = useSelector(getPopGoodsLoadStatus);
+  const popGoods = useSelector(popGoodsSelectors.getPopGoods);
+  const popGoodsLoadStatus = useSelector(
+    popGoodsSelectors.getPopGoodsLoadStatus
+  );
   const dispatch = useDispatch();
   const fetchPopGoods = popGoodsAction.fetchPopGoods;
 

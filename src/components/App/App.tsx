@@ -9,9 +9,9 @@ import { CartPage } from "../CartPage";
 import { GoodsTablePage } from "../GoodsTablePage";
 import { LoginPage } from "../LoginPage";
 import { RegisterPage } from "../RegisterPage";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserSlice, userActions } from "../../store/userReducer";
+import { userSelectors, userActions } from "../../store/userReducer";
 
 export enum LINKS {
   start = "/",
@@ -27,7 +27,7 @@ export enum LINKS {
 
 export const App = () => {
   const dispatch = useDispatch();
-  const isAuth = useSelector(getUserSlice).isAuth;
+  const isAuth = useSelector(userSelectors.getIsAuth);
 
   useEffect(() => {
     if (localStorage.getItem("userToken")) {

@@ -1,5 +1,15 @@
 import { RootState } from "../store";
-import type { GoodsTypeStore } from "./constatns";
+import type { GoodsCardType } from "./constatns";
 
-export const getGoodsSlice = (state: RootState): GoodsTypeStore =>
-  state.goodsData;
+  export const getGoodsItems = (state: RootState ):GoodsCardType[] =>
+  state.goodsData.items
+  
+  export const getGoodsLoadStatus = (state: RootState ):string =>
+  state.goodsData.loadStatus 
+  
+  export const getItemsSearchHeader = (state: RootState):GoodsCardType[] =>
+  state.goodsData.itemsSearchHeader
+  
+  export const getTotalGoodsItems =  (state: RootState):number =>
+  state.goodsData.total
+  

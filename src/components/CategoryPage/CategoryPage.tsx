@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { GoodsCard } from "../GoodsCard";
-import { getSideMenuItems } from "../../store/categoriesReducer";
-import { getGoodsSlice, goodsAction } from "../../store/goodsReducer";
+import { sideMenuSelectors } from "../../store/categoriesReducer";
+import { goodsSelectors, goodsAction } from "../../store/goodsReducer";
 import { Loader } from "../Loader";
 import { LOAD_STATUSES } from "../../store/constatns";
 import { LINKS } from "../App";
@@ -25,9 +25,9 @@ export const CategoryPage: React.FC = () => {
     dispatch(goodsAction.fetchCategoryGoods(categoryParams, goodsParams));
   }, [dispatch, typeId]);
 
-  const dataCategory = useSelector(getSideMenuItems);
-  const dataGoods = useSelector(getGoodsSlice).items;
-  const pageStatus = useSelector(getGoodsSlice).loadStatus;
+  const dataCategory = useSelector(sideMenuSelectors.getSideMenuItems);
+  const dataGoods = useSelector(goodsSelectors.getGoodsItems);
+  const pageStatus = useSelector(goodsSelectors.getGoodsLoadStatus);
 
   if (!dataCategory || !dataGoods) {
     return (

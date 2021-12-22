@@ -1,4 +1,8 @@
 import { RootState } from "../store";
 
-export const getCartSlice = (state:RootState) => state.cartData
+export const getCart = (state:RootState) => state.cartData.cart
+
+export const getCartLoadStatus = (state:RootState) => state.cartData.loadStatus
+
+
 

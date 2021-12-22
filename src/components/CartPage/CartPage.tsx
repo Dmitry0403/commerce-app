@@ -2,15 +2,15 @@ import css from "./styles.module.css";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { GoodsCard } from "../GoodsCard";
-import { getCartSlice } from "../../store/cartReducer";
+import { cartSelectors } from "../../store/cartReducer";
 import { LINKS } from "../App";
 import { LOAD_STATUSES } from "../../store/constatns";
-import { getUserSlice } from "../../store/userReducer";
+import { userSelectors } from "../../store/userReducer";
 
 export const CartPage: React.FC = () => {
-  const dataCart = useSelector(getCartSlice).cart;
-  const loadStatus = useSelector(getCartSlice).loadStatus;
-  const errorMessage = useSelector(getUserSlice).errorMessage;
+  const dataCart = useSelector(cartSelectors.getCart);
+  const loadStatus = useSelector(cartSelectors.getCartLoadStatus);
+  const errorMessage = useSelector(userSelectors.getErrorMessage);
   const navigate = useNavigate();
   
   let titleCart: string = "Ваша корзина покупок";

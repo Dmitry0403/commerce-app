@@ -15,26 +15,26 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import css from "./styles.module.css";
 import { useCallback, useEffect, useState } from "react";
-import { cartActions, getCartSlice } from "../../store/cartReducer";
+import { cartActions, cartSelectors } from "../../store/cartReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { LINKS } from "../App";
-import { goodsAction, getGoodsSlice } from "../../store/goodsReducer";
+import { goodsAction, goodsSelectors } from "../../store/goodsReducer";
 import { LOAD_STATUSES } from "../../store/constatns";
-import { getUserSlice, userActions } from "../../store/userReducer";
+import { userSelectors, userActions } from "../../store/userReducer";
 
 export const Header = () => {
   const { Header } = Layout;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const status = useSelector(getUserSlice).isAuth;
-  const token = useSelector(getUserSlice).user.token;
+  const status = useSelector(userSelectors.getIsAuth);
+  const token = useSelector(userSelectors.getUserToken);
   const [value, setValue] = useState("");
 
   useEffect(() => {
     dispatch(cartActions.fetchCart(token));
   }, [dispatch, token]);
 
-  const cart = useSelector(getCartSlice).cart;
+  const cart = useSelector(cartSelectors.getCart);
   let amountCart: number;
   amountCart = cart ? cart.length : 0;
 
@@ -70,8 +70,8 @@ export const Header = () => {
   };
   const selectGoodsDebounced = useCallback(debounce(selectGoods, 1500), []);
 
-  const dataSearchHeader = useSelector(getGoodsSlice).itemsSearchHeader;
-  const loadStatus = useSelector(getGoodsSlice).loadStatus;
+  const dataSearchHeader = useSelector(goodsSelectors.getItemsSearchHeader);
+  const loadStatus = useSelector(goodsSelectors.getGoodsLoadStatus);
 
   let options = [];
 
