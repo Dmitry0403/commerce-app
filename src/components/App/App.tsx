@@ -30,10 +30,7 @@ export const App = () => {
   const isAuth = useSelector(userSelectors.getIsAuth);
 
   useEffect(() => {
-    if (localStorage.getItem("userToken")) {
-      const user = JSON.parse(localStorage.getItem("userToken") as string);
-      dispatch(userActions.setUserSuccess(user));
-    }
+    dispatch(userActions.getTokenFromStorage());
   }, [dispatch]);
 
   return (

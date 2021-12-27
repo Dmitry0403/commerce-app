@@ -59,3 +59,10 @@ export const fetchLogin = (loginUser: UserType) => async (dispatch: any) => {
     dispatch(changeLoadStatus(LOAD_STATUSES.FAILURE));
   }
 };
+
+export const getTokenFromStorage = () => (dispatch: any) => {
+  if (localStorage.getItem("userToken")) {
+    const user = JSON.parse(localStorage.getItem("userToken") as string);
+    dispatch(setUserSuccess(user));
+  }
+};
