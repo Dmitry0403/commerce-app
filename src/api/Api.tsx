@@ -5,6 +5,7 @@ import type { UserRegType } from "../components/RegisterPage";
 import type { UserType } from "../components/LoginPage";
 
 export class Api {
+
   getCategories(params: string): Promise<{ categories: CategoryType[] }> {
     return fetch(`/api/categories?${params}`).then((resp) => {
       if (resp.ok) {
@@ -29,9 +30,15 @@ export class Api {
     });
   }
 
-  getСart(token: string): Promise<Response> {
+  getСart(token: string): Promise<any> {
     return fetch("/api/cart", {
       headers: { Authorization: `Bearer ${token}` },
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        return resp.text();
+      }
     });
   }
 
@@ -39,18 +46,30 @@ export class Api {
     data: GoodsCardType,
     method: string,
     token: string
-  ): Promise<Response> {
+  ): Promise<any> {
     return fetch("/api/cart", {
       method: method,
       headers: { Authorization: `Bearer ${token}` },
       body: JSON.stringify(data),
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        return resp.text();
+      }
     });
   }
 
-  getUser(data: UserType | UserRegType, path: string): Promise<Response> {
+  getUser(data: UserType | UserRegType, path: string): Promise<any> {
     return fetch(`/api/${path}`, {
       method: "POST",
       body: JSON.stringify(data),
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        return resp.text();
+      }
     });
   }
 }

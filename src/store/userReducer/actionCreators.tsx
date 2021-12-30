@@ -5,6 +5,7 @@ import { UserType } from "../../components/LoginPage";
 import { LOAD_STATUSES } from "../constatns";
 import { notification } from "antd";
 
+
 export const setUserSuccess = (payload: UserTokenType) => ({
   type: USER_ACTIONS.SET_USER_SUCCESS,
   payload,
@@ -28,10 +29,10 @@ export const fetchReg = (dataUser: UserRegType) => async (dispatch: any) => {
   dispatch(changeLoadStatus(LOAD_STATUSES.LOADING));
   try {
     const resp = await Api.prototype.getUser(dataUser, "registration");
-    if (resp.ok) {
+    if (typeof(resp) !== "string") {
       dispatch(changeLoadStatus(LOAD_STATUSES.SUCCESS));
     } else {
-      resp.text().then((respText) => dispatch(setErrorMessage(respText)));
+      dispatch(setErrorMessage(resp));
       throw new Error("ошибка");
     }
   } catch (error) {
@@ -43,16 +44,15 @@ export const fetchLogin = (loginUser: UserType) => async (dispatch: any) => {
   dispatch(changeLoadStatus(LOAD_STATUSES.LOADING));
   try {
     const resp = await Api.prototype.getUser(loginUser, "login");
-    if (resp.ok) {
-      const userToken: UserTokenType = await resp.json();
-      localStorage.setItem("userToken", JSON.stringify(userToken) as string);
+    if (typeof(resp) !== "string") {
+      localStorage.setItem("userToken", JSON.stringify(resp) as string);
       notification.open({
         message: "Вы успешно прошли авторизацию",
         duration: 2,
       });
-      dispatch(setUserSuccess(userToken));
+      dispatch(setUserSuccess(resp));
     } else {
-      resp.text().then((respText) => dispatch(setErrorMessage(respText)));
+      dispatch(setErrorMessage(resp));
       throw new Error("ошибка");
     }
   } catch (error) {
@@ -62,7 +62,7 @@ export const fetchLogin = (loginUser: UserType) => async (dispatch: any) => {
 
 export const getTokenFromStorage = () => (dispatch: any) => {
   if (localStorage.getItem("userToken")) {
-    const user = JSON.parse(localStorage.getItem("userToken") as string);
+    const user: UserTokenType = JSON.parse(localStorage.getItem("userToken") as string);
     dispatch(setUserSuccess(user));
   }
 };

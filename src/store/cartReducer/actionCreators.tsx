@@ -17,15 +17,15 @@ export const setCartFailure = () => ({
   type: CART_ACTIONS.SET_CART_FAILURE,
 });
 
+
 export const fetchCart = (token: string) => async (dispatch: any) => {
   dispatch(setCart());
   try {
     const resp = await Api.prototype.getСart(token);
-    if (resp.ok){
-      const data: GoodsCardType[] = await resp.json()
-      dispatch(setCartSuccess(data))
+    if (typeof(resp) !== "string") {
+      dispatch(setCartSuccess(resp))
     } else {
-      resp.text().then((respText) => dispatch(setErrorMessage(respText)));
+      dispatch(setErrorMessage(resp));
       throw new Error("ошибка");
     }
   } catch (error) {
@@ -43,13 +43,14 @@ export const changeCart =
     try {
       dispatch(setCart());
       const resp = await Api.prototype.changeCart(data, method, token);
-      if (resp.ok) {
+      if (typeof(resp) !== "string") {
         dispatch(fetchCart(token));
       } else {
-        resp.text().then((respText) => dispatch(setErrorMessage(respText)));
+        dispatch(setErrorMessage(resp));
         throw new Error("ошибка");
       }
     } catch (err) {
       dispatch(setCartFailure());
     }
   };
+
