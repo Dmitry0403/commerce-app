@@ -1,32 +1,49 @@
 import css from "./styles.module.css";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GoodsCard } from "../GoodsCard";
-import { getCart } from "../../store/cartReducer";
+import { cartSelectors } from "../../store/cartReducer";
 import { LINKS } from "../App";
+import { LOAD_STATUSES } from "../../store/constatns";
+import { userSelectors } from "../../store/userReducer";
 
 export const CartPage: React.FC = () => {
-  const dataCart = useSelector(getCart);
+  const dataCart = useSelector(cartSelectors.getCart);
+  const loadStatus = useSelector(cartSelectors.getCartLoadStatus);
+  const errorMessage = useSelector(userSelectors.getErrorMessage);
+  const navigate = useNavigate();
+  
   let titleCart: string = "Ваша корзина покупок";
   if (dataCart.length === 0) {
     titleCart = "Ваша корзина покупок пуста";
   }
   return (
-    <div className={css.categoryList}>
-      <div className={css.title}>{titleCart}</div>
-      <div className={css.goodsList}>
-        {dataCart.map((item) => (
-          <Link to={LINKS.product + "/" + item.id} key={item.id}>
-            <GoodsCard
-              label={item.label}
-              img={item.img}
-              price={item.price}
-              id={item.id}
-              categoryTypeId={item.categoryTypeId}
-            />
-          </Link>
-        ))}
-      </div>
+    <div>
+      {loadStatus === LOAD_STATUSES.SUCCESS && (
+        <div className={css.categoryList}>
+          <div className={css.title}>{titleCart}</div>
+          <div className={css.goodsList}>
+            {dataCart.map((item) => (
+              <Link to={LINKS.product + "/" + item.id} key={item.id}>
+                <GoodsCard
+                  label={item.label}
+                  img={item.img}
+                  price={item.price}
+                  id={item.id}
+                  categoryTypeId={item.categoryTypeId}
+                />
+              </Link>
+            ))}
+          </div>
+          )
+        </div>
+      )}
+      {loadStatus === LOAD_STATUSES.FAILURE && (
+        <div className={css.errorPage}>
+          {errorMessage},
+          <span onClick={() => navigate(-1)}>вернуться назад </span>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 export { goodsReducer } from "./reducer";
-export { getGoodsSlice } from "./selectors";
+export * as goodsSelectors from "./selectors";
 export * as goodsAction from "./actionCreators";
 
 export type { GoodsCardType, GoodsType, GoodsTypeStore } from "./constatns";

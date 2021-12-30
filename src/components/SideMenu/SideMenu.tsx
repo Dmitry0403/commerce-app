@@ -1,18 +1,17 @@
 import { useSelector, useDispatch } from "react-redux";
-import { getSideMenuItems } from "../../store/categoriesReducer";
+import { sideMenuSelectors } from "../../store/categoriesReducer";
 import { useEffect } from "react";
 import { menuActions } from "../../store/categoriesReducer";
 import { Link } from "react-router-dom";
 import { Menu } from "antd";
 import css from "./styles.module.css";
-import { getLoadStatusMenu } from "../../store/categoriesReducer";
 import { LOAD_STATUSES } from "../../store/constatns";
 
 export const SideMenu: React.FC = () => {
   const dispatch = useDispatch();
   const fetchCategoryItems = menuActions.fetchCategoryItems;
-  const loadStatusMenu = useSelector(getLoadStatusMenu);
-  const sideMenuItems = useSelector(getSideMenuItems);
+  const loadStatusMenu = useSelector(sideMenuSelectors.getLoadStatusMenu);
+  const sideMenuItems = useSelector(sideMenuSelectors.getSideMenuItems);
   const params: string = "";
 
   useEffect(() => {

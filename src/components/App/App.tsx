@@ -9,7 +9,9 @@ import { CartPage } from "../CartPage";
 import { GoodsTablePage } from "../GoodsTablePage";
 import { LoginPage } from "../LoginPage";
 import { RegisterPage } from "../RegisterPage";
-import { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { userSelectors, userActions } from "../../store/userReducer";
 
 export enum LINKS {
   start = "/",
@@ -24,23 +26,24 @@ export enum LINKS {
 }
 
 export const App = () => {
-  let [status, setStatus] = useState(false);
+  const dispatch = useDispatch();
+  const isAuth = useSelector(userSelectors.getIsAuth);
 
-  const changeStatus = () => {
-    setStatus((prevState) => (status = !prevState));
-  };
+  useEffect(() => {
+    dispatch(userActions.getTokenFromStorage());
+  }, [dispatch]);
 
   return (
     <div>
-      <Header status={status} changeLoginStatus={changeStatus}/>
+      <Header />
       <Routes>
         <Route
           path={LINKS.logo}
-          element={<LoginPage changeLoginStatus={changeStatus} />}
+          element={isAuth ? <Navigate to={LINKS.start} /> : <LoginPage />}
         />
         <Route
           path={LINKS.reg}
-          element={<RegisterPage changeLoginStatus={changeStatus} />}
+          element={isAuth ? <Navigate to={LINKS.start} /> : <RegisterPage />}
         />
         <Route path={LINKS.table} element={<GoodsTablePage />} />
         <Route path={LINKS.cart} element={<CartPage />} />

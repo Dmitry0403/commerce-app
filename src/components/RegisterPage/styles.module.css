@@ -66,7 +66,24 @@ label {
 
 .errorMessage {
   position: absolute;
-  bottom: -30px;
+  bottom: -25px;
   left: 10px;
   color: red;
+}
+
+.errorPage {
+  background-color: lightblue;
+  font-size: 26px;
+  color: rgb(67, 76, 85);
+  text-align: center;
+  padding: 5px;
+}
+
+.errorPage span {
+  color: rgb(67, 76, 85);
+}
+
+.errorPage span:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }

@@ -4,13 +4,15 @@ import { categoriesReducer } from "./categoriesReducer";
 import { popGoodsReducer } from "./popularGoodsReducer";
 import { cartReducer } from "./cartReducer";
 import { goodsReducer } from "./goodsReducer";
+import { userReducer } from "./userReducer";
 
 
 const reducer = combineReducers({
   categoryItems: categoriesReducer,
   popGoodsList: popGoodsReducer,
   cartData: cartReducer,
-  goodsData: goodsReducer
+  goodsData: goodsReducer,
+  userData: userReducer,
 })
 
 
@@ -20,6 +22,5 @@ export const store = createStore(reducer, compose( applyMiddleware(thunk),
 ));
 
 export type RootState = ReturnType<typeof store.getState>
-
 
 

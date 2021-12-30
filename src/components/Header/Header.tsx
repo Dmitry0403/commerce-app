@@ -15,36 +15,36 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import css from "./styles.module.css";
 import { useCallback, useEffect, useState } from "react";
-import { cartActions, getCart } from "../../store/cartReducer";
+import { cartActions, cartSelectors } from "../../store/cartReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { LINKS } from "../App";
-import { goodsAction, getGoodsSlice } from "../../store/goodsReducer";
+import { goodsAction, goodsSelectors } from "../../store/goodsReducer";
 import { LOAD_STATUSES } from "../../store/constatns";
+import { userSelectors, userActions } from "../../store/userReducer";
 
-interface StatusType {
-  status: boolean;
-  changeLoginStatus: () => void;
-}
-
-export const Header: React.FC<StatusType> = ({ status, changeLoginStatus }) => {
+export const Header = () => {
   const { Header } = Layout;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const status = useSelector(userSelectors.getIsAuth);
+  const token = useSelector(userSelectors.getUserToken);
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    dispatch(cartActions.fetchCart());
-  }, [dispatch]);
+    dispatch(cartActions.fetchCart(token));
+  }, [dispatch, token]);
 
-  const cart = useSelector(getCart);
-  const amountCart = cart.length;
+  const cart = useSelector(cartSelectors.getCart);
+  let amountCart: number;
+  amountCart = cart ? cart.length : 0;
 
   const btn = (
     <Button
       type="primary"
       onClick={() => {
-        changeLoginStatus();
+        dispatch(userActions.exitUser());
         notification.close("close");
+        navigate(LINKS.logo);
       }}
     >
       Да
@@ -69,8 +69,8 @@ export const Header: React.FC<StatusType> = ({ status, changeLoginStatus }) => {
   };
   const selectGoodsDebounced = useCallback(debounce(selectGoods, 1500), []);
 
-  const dataSearchHeader = useSelector(getGoodsSlice).itemsSearchHeader;
-  const loadStatus = useSelector(getGoodsSlice).loadStatus;
+  const dataSearchHeader = useSelector(goodsSelectors.getItemsSearchHeader);
+  const loadStatus = useSelector(goodsSelectors.getGoodsLoadStatus);
 
   let options = [];
 
