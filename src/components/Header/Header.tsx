@@ -42,8 +42,7 @@ export const Header = () => {
     <Button
       type="primary"
       onClick={() => {
-        dispatch(userActions.setUserExit());
-        localStorage.removeItem("userToken");
+        dispatch(userActions.exitUser());
         notification.close("close");
         navigate(LINKS.logo);
       }}
