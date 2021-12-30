@@ -168,7 +168,7 @@ export const GoodsTablePage = () => {
           <label className={css.titleItem}>По категории:</label>
           <Input.Group>
             <Select
-              defaultValue="Дом, сад, зоотовары"
+              defaultValue="Категории товаров"
               style={{ width: "70%" }}
               onChange={handlerFilterCategory}
             >

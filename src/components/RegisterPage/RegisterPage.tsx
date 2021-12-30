@@ -20,6 +20,16 @@ export const getDataForFetch = (obj: any) => {
   return newObj;
 };
 
+enum ERROR_MESSAGES {
+  NEED_SECRET_QUESTION = "введите ответ на секретный вопрос",
+  OBLIGATORY_FIELD = "обязательное поле",
+  BORN_THAN_1930 = "не старше 1930 года рождения",
+  MIN_2_CATEGORIES = "выберете мин 2 категории",
+  MIN_6_CHARACTERS = "минимум 6 символов",
+  PASSWORD_MISMATCH = "пароли не совпадают",
+  MIN_2_CHARACTERS = "минимум 2 символа",
+}
+
 export interface UserRegType {
   name: string;
   surname?: string;
@@ -72,33 +82,33 @@ export const RegisterPage = () => {
     secretType: yup.string(),
     secretAnswer: yup.string().when("secretType", {
       is: (secretType: string) => Boolean(secretType),
-      then: yup.string().required("введите ответ на секретный вопрос"),
+      then: yup.string().required(ERROR_MESSAGES.NEED_SECRET_QUESTION),
     }),
     bornAt: yup
       .date()
       .test((value) => Boolean(value))
-      .required("обязательное поле")
-      .min(1930.01, "не старше 1930 года рождения"),
+      .required(ERROR_MESSAGES.OBLIGATORY_FIELD)
+      .min(1930.01, ERROR_MESSAGES.BORN_THAN_1930),
     isSubscribe: yup.boolean(),
-    interests: yup.array().min(2, "выберете мин 2 категории"),
+    interests: yup.array().min(2, ERROR_MESSAGES.MIN_2_CATEGORIES),
     gender: yup.string(),
     password: yup
       .string()
-      .min(6, "минимум 6 символов")
-      .required("обязательное поле"),
+      .min(6, ERROR_MESSAGES.MIN_6_CHARACTERS)
+      .required(ERROR_MESSAGES.OBLIGATORY_FIELD),
     confirmPass: yup
       .string()
       .test(
         `is-${user.password}`,
-        "пароли не совпадают",
+        ERROR_MESSAGES.PASSWORD_MISMATCH,
         (value) => value === user.password
       ),
-    email: yup.string().email().required("обязательное поле"),
-    surname: yup.string().min(2, "минимум 2 символа"),
+    email: yup.string().email().required(ERROR_MESSAGES.OBLIGATORY_FIELD),
+    surname: yup.string().min(2, ERROR_MESSAGES.MIN_2_CHARACTERS),
     name: yup
       .string()
-      .min(2, "минимум 2 символа")
-      .required("обязательное поле"),
+      .min(2, ERROR_MESSAGES.MIN_2_CHARACTERS)
+      .required(ERROR_MESSAGES.OBLIGATORY_FIELD),
   });
 
   useEffect(() => {
