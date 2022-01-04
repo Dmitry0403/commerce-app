@@ -8,7 +8,6 @@ import { cartActions } from "../../store/cartReducer";
 import { goodsSelectors, goodsAction } from "../../store/goodsReducer";
 import { LOAD_STATUSES } from "../../store/constatns";
 import { Loader } from "../Loader";
-import { userSelectors } from "../../store/userReducer";
 
 export enum BUTTON_STATUS {
   putInCart = "Положить в корзину",
@@ -19,7 +18,6 @@ export const GoodsPage: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const token  = useSelector(userSelectors.getUserToken)
 
   useEffect(() => {
     if (!id) {
@@ -37,7 +35,6 @@ export const GoodsPage: React.FC = () => {
   let buttonStatus = BUTTON_STATUS.putInCart;
   const cartLoadStatus = useSelector(cartSelectors.getCartLoadStatus);
 
-  
   if (cart.find((item) => item.id === dataGoodsPage.id)) {
     buttonStatus = BUTTON_STATUS.delFromCart;
   }
@@ -66,7 +63,7 @@ export const GoodsPage: React.FC = () => {
                 disabled={cartLoadStatus === LOAD_STATUSES.LOADING}
                 className={css.button}
                 onClick={() => {
-                  dispatch(cartActions.changeCart(dataGoodsPage, buttonStatus, token));
+                  dispatch(cartActions.changeCart(dataGoodsPage, buttonStatus));
                 }}
               >
                 {buttonStatus}

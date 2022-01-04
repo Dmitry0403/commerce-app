@@ -17,34 +17,34 @@ export const setCartFailure = () => ({
   type: CART_ACTIONS.SET_CART_FAILURE,
 });
 
-
-export const fetchCart = (token: string) => async (dispatch: any) => {
-  dispatch(setCart());
-  try {
-    const resp = await Api.prototype.getСart(token);
-    if (typeof(resp) !== "string") {
-      dispatch(setCartSuccess(resp))
-    } else {
-      dispatch(setErrorMessage(resp));
-      throw new Error("ошибка");
+export const fetchCart =
+  () => async (dispatch: any, _getState: unknown, api: Api) => {
+    dispatch(setCart());
+    try {
+      const resp = await api.getСart();
+      if (typeof resp !== "string") {
+        dispatch(setCartSuccess(resp));
+      } else {
+        dispatch(setErrorMessage(resp));
+        throw new Error("ошибка");
+      }
+    } catch (error) {
+      dispatch(setCartFailure());
     }
-  } catch (error) {
-    dispatch(setCartFailure());
-  }
-};
+  };
 
 export const changeCart =
-  (data: GoodsCardType, status: string, token: string) =>
-  async (dispatch: any) => {
+  (data: GoodsCardType, status: string) =>
+  async (dispatch: any, _getState: unknown, api: Api) => {
     let method = "";
     status === BUTTON_STATUS.delFromCart
       ? (method = "DELETE")
       : (method = "PUT");
     try {
       dispatch(setCart());
-      const resp = await Api.prototype.changeCart(data, method, token);
-      if (typeof(resp) !== "string") {
-        dispatch(fetchCart(token));
+      const resp = await api.changeCart(data, method);
+      if (typeof resp !== "string") {
+        dispatch(fetchCart());
       } else {
         dispatch(setErrorMessage(resp));
         throw new Error("ошибка");
@@ -53,4 +53,3 @@ export const changeCart =
       dispatch(setCartFailure());
     }
   };
-

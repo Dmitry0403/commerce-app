@@ -15,15 +15,13 @@ export const getPopGoodsFailure = () => ({
   type: POP_GOODS_ACTIONS.SET_POP_GOODS_FAILURE,
 });
 
-export const fetchPopGoods = () => async (dispatch: any) => {
-  dispatch(getPopGoods());
-  try {
-    const payload = await Api.prototype.getPopularCategories();
-    dispatch(getPopGoodsSuccess(payload));
-  } catch (error) {
-    dispatch(getPopGoodsFailure());
-  }
-};
-
-
-
+export const fetchPopGoods =
+  () => async (dispatch: any, _getState: unknown, api: Api) => {
+    dispatch(getPopGoods());
+    try {
+      const payload = await api.getPopularCategories();
+      dispatch(getPopGoodsSuccess(payload));
+    } catch (error) {
+      dispatch(getPopGoodsFailure());
+    }
+  };

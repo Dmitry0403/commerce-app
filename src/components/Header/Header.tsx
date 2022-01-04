@@ -27,12 +27,11 @@ export const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const status = useSelector(userSelectors.getIsAuth);
-  const token = useSelector(userSelectors.getUserToken);
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    dispatch(cartActions.fetchCart(token));
-  }, [dispatch, token]);
+    dispatch(cartActions.fetchCart());
+  }, [dispatch]);
 
   const cart = useSelector(cartSelectors.getCart);
   let amountCart: number;
