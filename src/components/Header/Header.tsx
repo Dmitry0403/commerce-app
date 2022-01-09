@@ -11,6 +11,7 @@ import {
   ShoppingCartOutlined,
   ShoppingOutlined,
   UserOutlined,
+  MenuOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import css from "./styles.module.css";
@@ -93,7 +94,7 @@ export const Header = () => {
       <AutoComplete
         options={options}
         placeholder="введите название товара"
-        style={{ width: 500 }}
+        style={{ width: 500, marginRight: "10px" }}
         allowClear
         onChange={(value) => selectGoodsDebounced(value)}
         onSelect={(_, option) =>
@@ -102,29 +103,37 @@ export const Header = () => {
           }, 900)
         }
       />
-      <Link to={LINKS.table}>
-        {" "}
-        <ShoppingOutlined />
-      </Link>
-      <Link to={LINKS.cart}>
-        <Badge count={amountCart}>
-          <ShoppingCartOutlined />
-        </Badge>
-      </Link>
-
-      <Button
-        style={{ border: "none", borderRadius: "50%" }}
-        onClick={handlerChangeStatus}
-      >
-        <Avatar
-          style={
-            status
-              ? { backgroundColor: "#87d068" }
-              : { backgroundColor: "#ccc" }
-          }
-          icon={<UserOutlined />}
-        />
-      </Button>
+      <div className={css.menuHeader}>
+        <MenuOutlined />
+        <div className={css.menu}>
+          <Link to={LINKS.table}>
+            <div className={css.menuItem}>
+              <ShoppingOutlined />
+              <span>Sorting</span>
+            </div>
+          </Link>
+          <Link to={LINKS.cart}>
+            <div className={css.menuItem}>
+              <Badge count={amountCart}>
+                <ShoppingCartOutlined />
+              </Badge>
+              <span>Cart</span>
+            </div>
+          </Link>
+          <div className={css.menuItem} onClick={handlerChangeStatus}>
+            <Avatar
+              className={css.login}
+              style={
+                status
+                  ? { backgroundColor: "#87d068" }
+                  : { backgroundColor: "#ccc" }
+              }
+              icon={<UserOutlined />}
+            />
+            <span>Login</span>
+          </div>
+        </div>
+      </div>
     </Header>
   );
 };

@@ -60,7 +60,9 @@ export const GoodsTablePage = () => {
     dispatch(goodsAction.fetchGoods(searchParams));
   };
   const memoizedFilter = useCallback(debounce(getDataFilter, 1500), []);
-  const categoriesItems: CategoryType[] = useSelector(sideMenuSelectors.getSideMenuItems);
+  const categoriesItems: CategoryType[] = useSelector(
+    sideMenuSelectors.getSideMenuItems
+  );
 
   useEffect(() => {
     if (!categoriesItems[1]) {
