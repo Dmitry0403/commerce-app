@@ -14,12 +14,13 @@ export const setCategoriesFailure = () => ({
   type: CATEGORIES_ACTIONS.SET_CATEGORIES_FAILURE,
 });
 
-export const fetchCategoryItems = (params:string) => async (dispatch: any) => {
-  dispatch(setCategoryItems());
-  try {
-    const payload = await Api.prototype.getCategories(params);
-    dispatch(setCategoriesSuccess(payload.categories));
-  } catch (error) {
-    dispatch(setCategoriesFailure());
-  }
-};
+export const fetchCategoryItems =
+  (params: string) => async (dispatch: any, _getState: unknown, api: Api) => {
+    dispatch(setCategoryItems());
+    try {
+      const payload = await api.getCategories(params);
+      dispatch(setCategoriesSuccess(payload.categories));
+    } catch (error) {
+      dispatch(setCategoriesFailure());
+    }
+  };

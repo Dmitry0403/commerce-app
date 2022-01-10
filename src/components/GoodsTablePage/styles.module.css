@@ -1,6 +1,5 @@
 .tablePage {
   display: flex;
-  /* justify-content: space-around; */
 }
 
 .filters {
@@ -21,7 +20,17 @@
   margin-bottom: 20px;
 }
 
-.table{
+.table {
   width: 60vw;
   padding: 50px;
+}
+
+@media screen and (max-width: 800px) {
+  .tablePage {
+    display: block;
+  }
+
+  .filters {
+    width: 100vw;
+  }
 }

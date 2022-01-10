@@ -1,6 +1,4 @@
 .wrapper {
-  width: 1600px;
-  margin: 0 auto;
   max-width: 100%;
   min-height: 100vh;
   background: rgb(229, 229, 231);
@@ -86,4 +84,10 @@ label {
 .errorPage span:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+
+@media screen and (max-width: 800px) {
+  .userForm {
+    display: inline;
+  }
 }

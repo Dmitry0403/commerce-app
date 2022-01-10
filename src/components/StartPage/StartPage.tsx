@@ -26,7 +26,10 @@ export const StartPage: React.FC = () => {
   return (
     <div>
       <Row className={css.menuBox}>
-        <Col span={6}>
+        <Col span={6} className={css.sideMenu}>
+          <SideMenu />
+        </Col>
+        <Col span={24} className={css.sideMenu_mob}>
           <SideMenu />
         </Col>
         <Col span={18} className={css.banner}></Col>

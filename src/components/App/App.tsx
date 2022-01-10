@@ -12,6 +12,7 @@ import { RegisterPage } from "../RegisterPage";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userSelectors, userActions } from "../../store/userReducer";
+import css from "./styles.module.css"
 
 export enum LINKS {
   start = "/",
@@ -34,7 +35,7 @@ export const App = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className={css.wrapper}>
       <Header />
       <Routes>
         <Route

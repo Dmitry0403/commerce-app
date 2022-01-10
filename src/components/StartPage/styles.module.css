@@ -6,7 +6,23 @@
   margin-bottom: 10px;
 }
 
-.error{
+.sideMenu_mob {
+  display: none;
+}
+
+.error {
   font-size: 36px;
   color: red;
+}
+
+@media screen and (max-width: 800px) {
+  .banner {
+    display: none;
+  }
+  .sideMenu {
+    display: none;
+  }
+  .sideMenu_mob {
+    display: inline;
+  }
 }

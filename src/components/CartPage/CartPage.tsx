@@ -1,18 +1,26 @@
 import css from "./styles.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { GoodsCard } from "../GoodsCard";
-import { cartSelectors } from "../../store/cartReducer";
+import { cartActions, cartSelectors } from "../../store/cartReducer";
 import { LINKS } from "../App";
 import { LOAD_STATUSES } from "../../store/constatns";
 import { userSelectors } from "../../store/userReducer";
+import { useEffect } from "react";
+
 
 export const CartPage: React.FC = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(cartActions.fetchCart());
+  }, [dispatch]);
+
   const dataCart = useSelector(cartSelectors.getCart);
   const loadStatus = useSelector(cartSelectors.getCartLoadStatus);
   const errorMessage = useSelector(userSelectors.getErrorMessage);
   const navigate = useNavigate();
-  
+
   let titleCart: string = "Ваша корзина покупок";
   if (dataCart.length === 0) {
     titleCart = "Ваша корзина покупок пуста";
