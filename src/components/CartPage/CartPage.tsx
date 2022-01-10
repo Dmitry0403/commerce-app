@@ -8,7 +8,6 @@ import { LOAD_STATUSES } from "../../store/constatns";
 import { userSelectors } from "../../store/userReducer";
 import { useEffect } from "react";
 
-
 export const CartPage: React.FC = () => {
   const dispatch = useDispatch();
 
@@ -43,7 +42,6 @@ export const CartPage: React.FC = () => {
               </Link>
             ))}
           </div>
-          )
         </div>
       )}
       {loadStatus === LOAD_STATUSES.FAILURE && (

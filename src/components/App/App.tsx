@@ -1,4 +1,5 @@
 import "antd/dist/antd.css";
+import css from "./styles.module.css"
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Footer } from "../Footer";
 import { Header } from "../Header";
@@ -12,7 +13,7 @@ import { RegisterPage } from "../RegisterPage";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userSelectors, userActions } from "../../store/userReducer";
-import css from "./styles.module.css"
+
 
 export enum LINKS {
   start = "/",
